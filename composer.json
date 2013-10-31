@@ -1,0 +1,63 @@
+{
+	"name":              "dreamfactory/dsp-core",
+	"description":       "DreamFactory Services Platform(tm) Core",
+	"homepage":          "http://dreamfactorysoftware.github.io",
+	"version":           "1.1.3",
+	"config":            {
+		"home":      "./",
+		"cache-dir": "./.composer/cache"
+	},
+	"keywords":          [
+		"php", "php5", "rest", "framework", "cloud-computing", "remote web services", "library", "dsp-core", "dsp"
+	],
+	"type":              "library",
+	"license":           [
+		"Apache-2.0"
+	],
+	"authors":           [
+		{
+			"name":  "Lee Hicks",
+			"email": "leehicks@dreamfactory.com",
+			"role":  "Lead Developer, server-side"
+		},
+		{
+			"name":  "Jason Sykes",
+			"email": "jasonsykes@dreamfactory.com",
+			"role":  "Lead Developer, client-side"
+		},
+		{
+			"name":  "Todd Appleton",
+			"email": "toddappleton@dreamfactory.com",
+			"role":  "Lead Developer and QA, client-side"
+		},
+		{
+			"name":  "Jerry Ablan",
+			"email": "jerryablan@dreamfactory.com",
+			"role":  "Black Ops"
+		}
+	],
+	"support":           {
+		"email":  "support@dreamfactory.com",
+		"issues": "https://github.com/dreamfactorysoftware/dsp-core/issues",
+		"wiki":   "https://github.com/dreamfactorysoftware/dsp-core/wiki",
+		"source": "https://github.com/dreamfactorysoftware/dsp-core"
+	},
+	"minimum-stability": "dev",
+	"require":           {
+		"php":                                  ">=5.3.10",
+		"kisma/kisma":                          ">=0.1.4",
+		"dreamfactory/yii":                     "dev-master",
+		"dreamfactory/app-admin":               "1.1.*",
+		"dreamfactory/app-launchpad":           "1.1.*",
+		"dreamfactory/lib-php-common-platform": "1.*",
+		"dreamfactory/web-core":                "*",
+		"dreamfactory/oasys":                   "*",
+		"dreamfactory/jetpack-salesforce":      "*"
+	},
+	"repositories":      [
+		{
+			"type": "pear",
+			"url":  "http://pear.php.net"
+		}
+	]
+}

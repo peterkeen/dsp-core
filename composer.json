@@ -52,7 +52,7 @@
 		"php":                                  ">=5.3.10",
 		"kisma/kisma":                          "~0.2.5",
 		"dreamfactory/yii":                     "*",
-		"dreamfactory/lib-php-common-platform": "dev-develop as dev-master"
+		"dreamfactory/lib-php-common-platform": "~1.2.2"
 	},
 	"repositories":      [
 		{

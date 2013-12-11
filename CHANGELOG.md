@@ -4,12 +4,13 @@
 
 ### Major Foundational Changes
 * Restructure of the project tree
-** The web root has been moved from `/web/public` to `/web`
-** All back-end server code has been moved from `/web/protected` to `/app`
+ * The web root has been moved from `/web/public` to `/web`
+ * All back-end server code has been moved from `/web/protected` to `/app`
+
 * Management apps **app-launchpad** and **app-admin** have been merged into the core
-** Duplicate code removed
-** Libraries updated
-** Removed directory `/shared` and all associated links
+ * Duplicate code removed
+ * Libraries updated
+ * Removed directory `/shared` and all associated links
 * Back-end-served pages have been upgraded to use Bootstrap v3.x
 
 ### New Features

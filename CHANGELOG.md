@@ -1,17 +1,25 @@
 # DreamFactory Services Platform(tm) Change Log
 
-## v1.2.2 (Released 2013-12-11)
+## v1.3.3 (Release 2014-01-03)
+* Continued refactoring of Launchpad application into PHP core
+* Login page now handled by PHP core
+* Admin welcome screen and support registration added
+* Portal service updated to allow for multiple portals to the same provider
+* Installer script updated with better messaging, logging, and options for running as root/non-root
+* Bug fixes
+
+## v1.2.3 (Released 2013-12-11)
 
 ### Major Foundational Changes
 * Restructure of the project tree
-    * The web/document root has been moved from `/web/public` to `/web`. 
-    * `/web` now contains only publically accessible code.
-    * All back-end server code has been moved from `/web/protected` to `/app`
+	* The web/document root has been moved from `/web/public` to `/web`
+	* `/web` now contains only publically accessible code
+	* All back-end server code has been moved from `/web/protected` to `/app`
 
 * Management apps **app-launchpad** and **app-admin** have been merged into the core
-    * Duplicate code removed
-    * Libraries updated
-    * Removed directory `/shared` and all associated links
+	* Duplicate code removed
+	* Libraries updated
+	* Removed directory `/shared` and all associated links
 
 * Back-end-served pages have been upgraded to use Bootstrap v3.x
 

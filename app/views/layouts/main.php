@@ -8,7 +8,6 @@
 <html lang="en">
 <head>
 	<link rel="shortcut icon" href="/img/df_logo_factory-32x32.png" />
-	<!-- Standard CSS from style guide -->
 	<!-- Bootstrap 3 CSS -->
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 	<!-- Font Awesome -->

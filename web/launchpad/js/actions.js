@@ -172,8 +172,7 @@ Actions = ({
 				// Did this because when we just $.show(see commented out line below)
 				// Angular hasn't populated the DOM because it's fallen out of scope
 				// I think
-				$('#admin').replaceWith($('<iframe>').attr('seamless', 'seamless').attr('id', name).attr('name', name).attr('class',
-						'app-loader').attr('src',
+				$('#admin').replaceWith($('<iframe>').attr('seamless', 'seamless').attr('id', name).attr('name', name).attr('class', 'app-loader').attr('src',
 						CurrentServer + url).appendTo('#app-container'));
 				//$('#admin').attr('seamless', 'seamless').attr('id', name).attr('name', name).attr('class', 'app-loader').attr('src', CurrentServer + url).show();
 			}
@@ -429,32 +428,34 @@ Actions = ({
 	},
 
 	doSignInDialog: function(stay) {
-		var _message = $.QueryString('error');
+		window.top.location.href = '/web/login?redirected=1';
 
-		if (_message) {
-			_message = decodeURIComponent(_message.replace(/\+/g, '%20'));
-		}
-		else {
-			_message =
-				( stay ? 'Your Session has expired. Please log in to continue' : 'Please enter your User Email and Password below to sign in.' );
-		}
-
-		window.Stay = false;
-		$('#loginErrorMessage').removeClass('alert-error').empty().html(_message);
-		this.clearSignIn();
-
-		if (stay) {
-			$("#loginDialog").modal('show').on('shown', function() {
-				$('#UserEmail').focus();
-			});
-			window.Stay = true;
-		}
-		else {
-			$("#loginDialog").modal('show').on('shown', function() {
-				$('#UserEmail').focus();
-			});
-			window.Stay = false;
-		}
+//		var _message = $.QueryString('error');
+//
+//		if (_message) {
+//			_message = decodeURIComponent(_message.replace(/\+/g, '%20'));
+//		}
+//		else {
+//			_message =
+//				( stay ? 'Your Session has expired. Please log in to continue' : 'Please enter your User Email and Password below to sign in.' );
+//		}
+//
+//		window.Stay = false;
+//		$('#loginErrorMessage').removeClass('alert-error').empty().html(_message);
+//		this.clearSignIn();
+//
+//		if (stay) {
+//			$("#loginDialog").modal('show').on('shown', function() {
+//				$('#UserEmail').focus();
+//			});
+//			window.Stay = true;
+//		}
+//		else {
+//			$("#loginDialog").modal('show').on('shown', function() {
+//				$('#UserEmail').focus();
+//			});
+//			window.Stay = false;
+//		}
 	},
 
 	signIn:            function() {
@@ -538,7 +539,7 @@ Actions = ({
 		$.ajax({
 			type:     'POST',
 			dataType: 'json',
-			url:      CurrentServer + '/rest/user/password/?app_name=launchpad&reset=true',
+			url: CurrentServer + '/rest/user/password/?app_name=launchpad&reset=true',
 			data:     JSON.stringify({email: $('#UserEmail').val()}),
 			cache:    false,
 			success:  function(response) {
@@ -575,7 +576,7 @@ Actions = ({
 			$.ajax({
 				dataType: 'json',
 				type:     'POST',
-				url:      CurrentServer + '/rest/user/password/?app_name=launchpad',
+				url: CurrentServer + '/rest/user/password/?app_name=launchpad',
 				data:     JSON.stringify(data),
 				cache:    false,
 				success:  function(response) {
@@ -619,7 +620,7 @@ Actions = ({
 		var that = this;
 		$.ajax({
 			dataType: 'json',
-			url:      CurrentServer + '/rest/user/profile/' + CurrentUserID + '/',
+			url: CurrentServer + '/rest/user/profile/' + CurrentUserID + '/',
 			data:     'method=GET&app_name=launchpad',
 			cache:    false,
 			success:  function(response) {
@@ -691,7 +692,7 @@ Actions = ({
 		$.ajax({
 			dataType: 'json',
 			type:     'POST',
-			url:      CurrentServer + '/rest/user/profile/' + CurrentUserID + '/?method=MERGE&app_name=launchpad',
+			url: CurrentServer + '/rest/user/profile/' + CurrentUserID + '/?method=MERGE&app_name=launchpad',
 			data:     JSON.stringify(NewUser),
 			cache:    false,
 			success:  function(response) {
@@ -753,7 +754,7 @@ Actions = ({
 		$.ajax({
 			dataType: 'json',
 			type:     'POST',
-			url:      CurrentServer + '/rest/user/password/?method=MERGE&app_name=launchpad',
+			url: CurrentServer + '/rest/user/password/?method=MERGE&app_name=launchpad',
 			data:     pass,
 			cache:    false,
 			success:  function(response) {
@@ -784,7 +785,7 @@ Actions = ({
 		$.ajax({
 			dataType: 'json',
 			type:     'POST',
-			url:      CurrentServer + '/rest/user/session/' + CurrentUserID + '/',
+			url: CurrentServer + '/rest/user/session/' + CurrentUserID + '/',
 			data:     'app_name=launchpad&method=DELETE',
 			cache:    false,
 			success:  function(response) {

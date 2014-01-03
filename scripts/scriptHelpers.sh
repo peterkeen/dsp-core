@@ -1,29 +1,19 @@
 #!/bin/bash
 #
-# @(#)$Id: scriptHelpers.sh,v 1.01 2011-11-12 jablan $
+# @(#)$Id: scriptHelpers.sh,v 1.02 2011-12-12 jablan $
 #
 # Some helper junk
 #
 
-################################################################################
-# General
-################################################################################
-
-if [ ${_df_scriptHelpers:-0} -eq 1 ] ; then
-	return
+# Don't re-include
+if [ ${_df_scriptHelper:=0} -eq 1 ] ; then
+    return
 fi
 
-_debug=${DF_DEBUG:=0} 					# 	set to 1 to dump paths when running
-_df_scriptHelpers=1						#	Tells other scripts that this has been run already
-_ME=`basename "${0}"`					# 	The name of the running script
-B1=`tput bold`							#	Everyone likes bold text!
-B2=`tput sgr0`							#	Ok, so not everyone...
-SYSTEM_TYPE=`uname -s`					#	The type of system (i.e. Linux, Mac, Windows)
-FABRIC_MARKER=/var/www/.fabric_hosted	#	Our Fabric marker
-BASE_PATH=`pwd`							# 	The current path
-
-# Source gitenv.sh if available
-[ -d "./.git" ] && [ "`which gitenv.sh >/dev/null 2>&1 ; echo $?`" != "0" ] && . gitenv.sh
+_df_scriptHelper_=1
+_ME=`basename $0`
+BASE_PATH=`pwd`
+_debug=${DF_DEBUG:=0} # set to 1 to enable debug logging
 
 ################################################################################
 # Colors
@@ -66,6 +56,10 @@ _WHITE='37m'
 # Initialize terminal database
 tput init
 
+# Bold on/off
+B1=`tput bold`
+B2=`tput sgr0`
+
 # Color Echo
 # $1 = string to echo
 # $2 = color
@@ -87,43 +81,41 @@ function cecho()
     	_b2=${B2}
     fi
 
-    if [ ${_lf} -ne 0 ] ; then
-        _echo="-e"
-    else
-    	_echo="-ne"
-    fi
+    [ ${_lf} -ne 0 ] && _echo="-e" || _echo="-ne"
 
     echo ${_echo} "${_b1}\033[${_color}${_message}\033[0m${_b2}"
 
 	return
 }
 
-# Display a message
-# $1 = tag
-# $2 = tag color
-# $3 = message text
-# $4 = message color
-# $5 = message bold
+# Generic message print
 _msg() {
-	local _pre=$(echo -e "${1}:\t")
-	cecho "${_pre}" "${2:-$_WHITE}" 1 0
-	cecho "$3" "${2:-$_WHITE}" ${5:-0} 1
+	_pre=$(echo -e "${1}\t")
+	cecho "${_pre}" "${2}"
+	echo "$3"
 }
 
 _info() {
-	_msg "${_ME}" "${_GREEN}" "$1"
+	_msg "  * info:" "${_GREEN}" "$1"
 }
 
 _notice() {
-	_msg "${_ME} notice" "${_YELLOW}" "$1"
+	_msg "  * notice:" "${_YELLOW}" "$1"
 }
 
 _error() {
-	_msg "${_ME} error" "${_RED}" "$1"
+	local _log=$1
+	[ "" = "${_log}" ] && cecho "  * error:\t************************[ See Below ]***************************" ${_RED} 1 1 || _msg "  * error:" "${_RED}" "${_log}"
 }
 
-_dbg() {
-	[ ${_debug} -eq 1 ] && cecho "$1" "${2:-$_YELLOW}" "${3:-0}" "${4:-1}"
+# Debug echo
+# $1 = string to echo
+function _dbg()
+{
+    if [ ${DF_DEBUG:=0} -eq 1 ] ; then
+	    cecho "  * debug:\t" ${_MAGENTA} 1 0
+	    cecho "${1}" ${_YELLOW} 1 1
+    fi
 }
 
 # Output a header thing
@@ -131,7 +123,7 @@ _dbg() {
 function sectionHeader()
 {
 	cecho "********************************************************************************" ${_GREEN} 0 1
-	cecho "*" ${_GREEN} 0 0 ; cecho "${1}" ${_WHITE} 1 1
+	cecho " ${1}" ${_WHITE} 1 1
 	cecho "********************************************************************************" ${_GREEN} 0 1
 	echo ""
 }

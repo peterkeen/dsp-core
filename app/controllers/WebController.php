@@ -21,11 +21,13 @@ use DreamFactory\Oasys\Enums\Flows;
 use DreamFactory\Oasys\Oasys;
 use DreamFactory\Oasys\Stores\FileSystem;
 use DreamFactory\Platform\Exceptions\BadRequestException;
+use DreamFactory\Platform\Exceptions\ForbiddenException;
 use DreamFactory\Platform\Interfaces\PlatformStates;
 use DreamFactory\Platform\Resources\User\Session;
 use DreamFactory\Platform\Services\AsgardService;
 use DreamFactory\Platform\Services\SystemManager;
 use DreamFactory\Platform\Utility\Fabric;
+use DreamFactory\Platform\Utility\ResourceStore;
 use DreamFactory\Platform\Yii\Models\Provider;
 use DreamFactory\Platform\Yii\Models\User;
 use DreamFactory\Yii\Controllers\BaseWebController;
@@ -122,8 +124,9 @@ class WebController extends BaseWebController
 					'authorize',
 					'remoteLogin',
 					'maintenance',
+					'welcome',
 				),
-				'users'   => array('*'),
+				'users'   => array( '*' ),
 			),
 			//	Allow authenticated users access to init commands
 			array(
@@ -137,7 +140,7 @@ class WebController extends BaseWebController
 					'fileTree',
 					'logout',
 				),
-				'users'   => array('@'),
+				'users'   => array( '@' ),
 			),
 			//	Deny all others access to init commands
 			array(
@@ -146,6 +149,9 @@ class WebController extends BaseWebController
 		);
 	}
 
+	/**
+	 * Maintenance screen
+	 */
 	public function actionMaintenance()
 	{
 		$this->layout = 'maintenance';
@@ -222,7 +228,7 @@ class WebController extends BaseWebController
 				}
 				else
 				{
-					$_model->addError( 'username', 'Invalid user name and password combination.' );
+//					$_model->addError( 'username', 'Invalid user name and password combination.' );
 
 					//	Came from login form? Don't do drupal auth, do dsp auth
 					if ( $_fromLogin )
@@ -338,6 +344,61 @@ class WebController extends BaseWebController
 	}
 
 	/**
+	 * First-time Welcome page
+	 */
+	public function actionWelcome()
+	{
+		if ( null === ( $_returnUrl = Pii::user()->getReturnUrl() ) )
+		{
+			$_returnUrl = Pii::url( $this->id . '/index' );
+		}
+
+		//	User cool too?
+		if ( null === ( $_user = ResourceStore::model( 'user' )->findByPk( Session::getCurrentUserId() ) ) )
+		{
+			throw new ForbiddenException();
+		}
+
+		/**
+		 * If request contains a "force_remove=1" parameter,
+		 * remove the registration file and redirect
+		 */
+		if ( '1' == FilterInput::get( INPUT_GET, 'force_remove', 0 ) )
+		{
+			Log::debug( 'Forced removal of registration marker requested.' );
+			SystemManager::registerPlatform( $_user, false, true );
+			$this->redirect( $_returnUrl );
+		}
+
+		$_model = new SupportForm();
+
+		// collect user input data
+		if ( isset( $_POST['SupportForm'] ) )
+		{
+			$_model->setAttributes( $_POST['SupportForm'] );
+
+			//	Validate user input and redirect to the previous page if valid
+			if ( $_model->validate() )
+			{
+				SystemManager::registerPlatform( $_user, $_model->getSkipped() );
+
+				$this->redirect( $_returnUrl );
+
+				return;
+			}
+
+			$_model->addError( 'Problem', 'Registration System Unavailable' );
+		}
+
+		$this->render(
+			 'welcome',
+			 array(
+				 'model' => $_model,
+			 )
+		);
+	}
+
+	/**
 	 * Displays the login page
 	 */
 	public function actionLogin( $redirected = false )
@@ -367,8 +428,6 @@ class WebController extends BaseWebController
 
 				return;
 			}
-
-			$_model->addError( 'username', 'Invalid user name and password combination.' );
 		}
 
 		$this->render(
@@ -580,10 +639,7 @@ class WebController extends BaseWebController
 
 		if ( !empty( $_path ) )
 		{
-			$_objects = new \RecursiveIteratorIterator(
-				new \RecursiveDirectoryIterator( $_path ),
-				RecursiveIteratorIterator::SELF_FIRST
-			);
+			$_objects = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( $_path ), RecursiveIteratorIterator::SELF_FIRST );
 
 			/** @var $_node \SplFileInfo */
 			foreach ( $_objects as $_name => $_node )

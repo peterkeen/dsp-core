@@ -98,7 +98,7 @@ class LoginForm extends CFormModel
 				return true;
 			}
 
-			$this->addError( 'password', 'The email address and password pair do not match.' );
+			$this->addError( null, 'Invalid user name and password combination.' );
 		}
 
 		return false;
@@ -163,7 +163,7 @@ class LoginForm extends CFormModel
 			else
 			{
 				$this->_identity = $_identity;
-				$_identity->setDrupalIdentity( $this->_drupalIdentity ?: $_identity );
+				$_identity->setDrupalIdentity( $this->_drupalIdentity ? : $_identity );
 			}
 
 			$_duration = $this->rememberMe ? 3600 * 24 * 30 : 0;

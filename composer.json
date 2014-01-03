@@ -2,7 +2,7 @@
 	"name":              "dreamfactory/dsp-core",
 	"description":       "DreamFactory Services Platform(tm) Core",
 	"homepage":          "http://dreamfactorysoftware.github.io",
-	"version":           "1.2.3",
+	"version":           "1.3.3",
 	"config":            {
 		"home":      "./",
 		"cache-dir": "./.composer/cache"
@@ -52,7 +52,7 @@
 		"php":                                  ">=5.3.10",
 		"kisma/kisma":                          "~0.2.5",
 		"dreamfactory/yii":                     "*",
-		"dreamfactory/lib-php-common-platform": "~1.2.2"
+		"dreamfactory/lib-php-common-platform": "~1.3.3"
 	},
 	"repositories":      [
 		{

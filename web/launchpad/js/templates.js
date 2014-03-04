@@ -106,7 +106,7 @@ var Templates = {
         '<div class="navbar navbar-inverse">' +
             '<div class="container">' +
             '<div class="navbar-spacer">' +
-            '<div class="pull-left df-logo"><a href="/"><img src="../img/logo.png"></a></div>' +
+            '<div class="pull-left df-logo"><a href="/"><img src="/img/logo.png"></a></div>' +
             '<a class="btn btn-navbar pull-right" data-toggle="collapse" data-target="#main-nav">' +
             '<span class="icon-bar"></span>' +
             '<span class="icon-bar"></span>' +
@@ -125,7 +125,7 @@ var Templates = {
             '{{#User.is_sys_admin}}' +
             '<a id="adminLink" class="btn btn-inverse btn-launch btn-stack" title="Admin Console"><i class="icon-cog"></i></a>' +
             '{{/User.is_sys_admin}}' +
-            '<a id="helpLink" target="df-new" class="btn btn-inverse btn-launch btn-stack" href="http://dreamfactorysoftware.github.io" title="Help"><i class="icon-question-sign"></i></a>' +
+            '<a id="helpLink" target="df-new" class="btn btn-inverse btn-launch btn-stack" href="http://www.dreamfactory.com/developers" title="Help"><i class="icon-question-sign"></i></a>' +
             '<a id="dfSignOutLink" onclick="Actions.doSignOutDialog()" class="btn btn-inverse btn-launch btn-stack" title="End Your Session Now"><i class="icon-signout"></i></a>' +
             '{{/User.activeSession}}' +
             '{{^User.activeSession}}' +
@@ -133,7 +133,7 @@ var Templates = {
             '<a id="apps-list-btn" onclick="Actions.showAppList()" class="btn btn-inverse btn-launch btn-stack disabled" title="Show Apps"><i class="icon-list"></i></a>' +
             '<a id="fs_toggle" class="btn btn-inverse btn-launch btn-stack" title="Full Screen" ><i class="icon-resize-full"></i></a>' +
             '{{/User.allow_guest_user}}' +
-            '<a id="helpLink" target="df-new" class="btn btn-inverse btn-launch btn-stack" href="http://dreamfactorysoftware.github.io" title="Help"><i class="icon-question-sign"></i></a>' +
+            '<a id="helpLink" target="df-new" class="btn btn-inverse btn-launch btn-stack" href="http://www.dreamfactory.com/developers" title="Help"><i class="icon-question-sign"></i></a>' +
             ' <a class="btn btn-inverse btn-launch btn-stack btn-signin" onclick="Actions.doSignInDialog()"><li class="icon-signin"></li>&nbsp;Sign In</a>' +
             '{{#User.allow_open_registration}}' +
             '<a class="btn btn-inverse btn-launch btn-stack btn-signin" onclick="Actions.createAccount()"><li class="icon-key"></li>&nbsp;Create Account</a>' +

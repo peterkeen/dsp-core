@@ -1,6 +1,36 @@
 # DreamFactory Services Platform(tm) Change Log
 
-## v1.3.3 (Release 2014-01-03)
+## v1.4.0 (Released 2014-02-28)
+
+### Major Foundational Changes
+* Restructure of the project tree
+	* The config/schema and contained files have been moved to the [SDK For PHP](https://bitbucket.org/dreamfactory/lib-php-common-platform/) library
+* More back-end-served pages have been upgraded to use Bootstrap v3.x
+* Change Password, Registration and Confirmation pages moved from web/launchpad to PHP controlled views
+* Collapse ```launchpad/img``` directory to ```web/img```
+* Moved all constants from ```config/common.config.php``` to ```config/constants.config.php```
+
+### New Features
+* Added -i|--interactive flag to installer.sh
+* Added new directory /storage/plugins in preparation for our plugin system release.
+* Updated aliases to be PSR-4 aware.
+* Upgraded logging system to use Monolog
+* Added schema, models, and API for device management, UI coming soon
+
+### Bug Fixes
+* Updated and corrected many css and code issues for forms and views
+* Moved load of aliases and constants to bootstrapper so caching works
+* Added local storage of DSP config so it is not constantly requested (disabled by default for now).
+
+### Miscellaneous
+* Changed help url, developer page will link to github.
+* New text for welcome/support page
+* Installer text change, set ownership of composer cache properly
+
+## v1.3.3 (Released 2014-01-03)
+* Installer and composer bug fixes
+
+## v1.3.2 (Released 2013-12-31)
 * Continued refactoring of Launchpad application into PHP core
 * Login page now handled by PHP core
 * Admin welcome screen and support registration added
@@ -13,7 +43,7 @@
 ### Major Foundational Changes
 * Restructure of the project tree
 	* The web/document root has been moved from `/web/public` to `/web`
-	* `/web` now contains only publically accessible code
+	* `/web` now contains only publicly accessible code
 	* All back-end server code has been moved from `/web/protected` to `/app`
 
 * Management apps **app-launchpad** and **app-admin** have been merged into the core

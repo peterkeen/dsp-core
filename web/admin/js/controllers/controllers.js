@@ -1,3 +1,18 @@
+'use strict';
+
+angular.module("AdminApp.controllers", [])
+    .controller('ApiSDKCtrl', ['$scope', function($scope) {
+
+
+
+
+    }]);
+
+
+
+
+
+/*
 var SwaggerCtrl = function ($rootScope, $timeout, $scope) {
 
     $scope.$on('$routeChangeSuccess', function () {
@@ -120,3 +135,4 @@ var SwaggerCtrl = function ($rootScope, $timeout, $scope) {
 
     });
 };
+    */

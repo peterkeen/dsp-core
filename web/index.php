@@ -3,7 +3,7 @@
  * This file is part of the DreamFactory Services Platform(tm) (DSP)
  *
  * DreamFactory Services Platform(tm) <http://github.com/dreamfactorysoftware/dsp-core>
- * Copyright 2012-2013 DreamFactory Software, Inc. <developer-support@dreamfactory.com>
+ * Copyright 2012-2013 DreamFactory Software, Inc. <support@dreamfactory.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@ $_autoloader = require_once( __DIR__ . '/../vendor/autoload.php' );
 require_once __DIR__ . '/../vendor/dreamfactory/yii/framework/yii.php';
 
 //	Yii debug settings
-defined( 'YII_DEBUG' ) or define( 'YII_DEBUG', true );
-defined( 'YII_TRACE_LEVEL' ) or define( 'YII_TRACE_LEVEL', 3 );
+//defined( 'YII_DEBUG' ) or define( 'YII_DEBUG', true );
+//defined( 'YII_TRACE_LEVEL' ) or define( 'YII_TRACE_LEVEL', 3 );
 
 //	Create the application and run
 DreamFactory\Yii\Utility\Pii::run(

@@ -493,7 +493,7 @@
             this.isCollection = this.dataType && (this.dataType.toLowerCase() === 'array' || this.dataType.toLowerCase() === 'list' || this.dataType.toLowerCase() === 'set');
             this.descr = obj.description;
             this.required = obj.required;
-            console.log(this);
+            //console.log(this);
             if (obj.items != null) {
                 if (obj.items.type != null) {
                     this.refDataType = obj.items.type;
@@ -582,7 +582,7 @@
             this.method = this.method.toLowerCase();
             this.isGetMethod = this.method === "get";
             this.resourceName = this.resource.name;
-            console.log("model type: " + type);
+            //console.log("model type: " + type);
             if (((_ref = this.type) != null ? _ref.toLowerCase() : void 0) === 'void') {
                 this.type = void 0;
             }

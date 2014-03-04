@@ -13,6 +13,7 @@
             var xmethod = $('#xmethod').val();
             var folder = $('#folder').val();
             var app = $('#app').val();
+            var token = $('#token').val();
 
             var json = null;
 
@@ -36,6 +37,9 @@
                         if(app != '') {
                             xhr.setRequestHeader("X-DreamFactory-Application-Name", app);
                         }
+						if(token != '') {
+							xhr.setRequestHeader("X-DreamFactory-Session-Token", token);
+						}
                     },
                     success: function(json){
                         $('#out').html(JSON.stringify(json, null, '\t'));
@@ -89,9 +93,13 @@
         <input type="text" id="folder" value="" size="40"/>
     </div>
     <div>
-        X-Application-Name:
+        X-DreamFactory-Application-Name:
         <input type="text" id="app" value="admin" size="40"/>
     </div>
+	<div>
+		X-DreamFactory-Session-Token:
+		<input type="text" id="token" value="" size="80"/>
+	</div>
     <br/>
     <button onclick="go()">SUBMIT</button>
 </div>

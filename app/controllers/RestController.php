@@ -3,7 +3,7 @@
  * This file is part of the DreamFactory Services Platform(tm) (DSP)
  *
  * DreamFactory Services Platform(tm) <http://github.com/dreamfactorysoftware/dsp-core>
- * Copyright 2012-2013 DreamFactory Software, Inc. <developer-support@dreamfactory.com>
+ * Copyright 2012-2014 DreamFactory Software, Inc. <support@dreamfactory.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,24 +97,18 @@ class RestController extends BaseFactoryController
 		try
 		{
 			//	Check for verb tunneling
-			$_tunnelMethod = FilterInput::server( 'HTTP_X_HTTP_METHOD', null, FILTER_SANITIZE_STRING );
-
-			if ( empty( $_tunnelMethod ) )
-			{
-				$_tunnelMethod = FilterInput::request( 'method', null, FILTER_SANITIZE_STRING );
-			}
+			$_tunnelMethod = strtoupper( Option::server( 'HTTP_X_HTTP_METHOD', FilterInput::request( 'method', null, FILTER_SANITIZE_STRING ) ) );
 
 			if ( !empty( $_tunnelMethod ) )
 			{
-				$_tunnelMethod = strtoupper( $_tunnelMethod );
 				switch ( $_tunnelMethod )
 				{
-					case HttpMethod::Post:
-					case HttpMethod::Get:
-					case HttpMethod::Put:
-					case HttpMethod::Merge:
-					case HttpMethod::Patch:
-					case HttpMethod::Delete:
+					case HttpMethod::POST:
+					case HttpMethod::GET:
+					case HttpMethod::PUT:
+					case HttpMethod::MERGE:
+					case HttpMethod::PATCH:
+					case HttpMethod::DELETE:
 						$_action = $_tunnelMethod;
 						break;
 
@@ -174,7 +168,13 @@ class RestController extends BaseFactoryController
 	}
 
 	/**
-	 * Override base method to do some processing of incoming requests
+	 * Override base method to do some processing of incoming requests.
+	 *
+	 * Fixes the slash at the end of the parsed path. Yii removes the trailing
+	 * slash by default. However, some DSP APIs require it to determine the
+	 * difference between a file and a folder.
+	 *
+	 * Routes look like this:        rest/<service:[_0-9a-zA-Z-]+>/<resource:[_0-9a-zA-Z-\/. ]+>
 	 *
 	 * @param \CAction $action
 	 *
@@ -183,12 +183,7 @@ class RestController extends BaseFactoryController
 	 */
 	protected function beforeAction( $action )
 	{
-		// fix the slash at the end, Yii removes trailing slash by default,
-		// but it is needed in some APIs to determine file vs folder, etc.
-		// 'rest/<service:[_0-9a-zA-Z-]+>/<resource:[_0-9a-zA-Z-\/. ]+>'
-		$path = Option::get( $_GET, 'path', '' );
-		$slashIndex = strpos( $path, '/' );
-		if ( false === $slashIndex )
+		if ( false === ( $slashIndex = strpos( $path = Option::get( $_GET, 'path' ), '/' ) ) )
 		{
 			$this->_service = $path;
 		}
@@ -196,13 +191,14 @@ class RestController extends BaseFactoryController
 		{
 			$this->_service = substr( $path, 0, $slashIndex );
 			$this->_resource = substr( $path, $slashIndex + 1 );
+
 			// fix removal of trailing slashes from resource
 			if ( !empty( $this->_resource ) )
 			{
 				$requestUri = Yii::app()->request->requestUri;
 				if ( ( false === strpos( $requestUri, '?' ) &&
-					   '/' === substr( $requestUri, strlen( $requestUri ) - 1, 1 ) ) ||
-					 ( '/' === substr( $requestUri, strpos( $requestUri, '?' ) - 1, 1 ) )
+						'/' === substr( $requestUri, strlen( $requestUri ) - 1, 1 ) ) ||
+					( '/' === substr( $requestUri, strpos( $requestUri, '?' ) - 1, 1 ) )
 				)
 				{
 					$this->_resource .= '/';

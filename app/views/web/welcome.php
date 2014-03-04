@@ -3,7 +3,7 @@
  * This file is part of the DreamFactory Services Platform(tm) (DSP)
  *
  * DreamFactory Services Platform(tm) <http://github.com/dreamfactorysoftware/dsp-core>
- * Copyright 2012-2013 DreamFactory Software, Inc. <developer-support@dreamfactory.com>
+ * Copyright 2012-2014 DreamFactory Software, Inc. <support@dreamfactory.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,11 +41,9 @@ HTML;
 }
 ?>
 <div class="container" id="formbox">
-	<h2 class="lead">Welcome!</h2>
+	<h2 class="lead">Product Support</h2>
 
-	<p>Would you like to register for free DreamFactory support and important product information?</p>
-
-	<p>We will never share your email with anyone and you can unsubscribe at any time.</p>
+	<p>Would you like one month of free engineering support and important product updates from DreamFactory?</p>
 
 	<?php echo $_summary; ?>
 
@@ -53,8 +51,8 @@ HTML;
 		<input type="hidden" name="SupportForm[skipped]" id="SupportForm_skipped" value="0">
 
 		<div class="form-buttons">
-			<button type="submit" class="btn btn-success pull-right">Register</button>
-			<button type="button" id="btn-skip" class="btn btn-default pull-left">Skip</button>
+			<button type="submit" class="btn btn-success pull-right">Yes</button>
+			<button type="button" id="btn-skip" class="btn btn-default pull-left">No</button>
 		</div>
 	</form>
 </div>

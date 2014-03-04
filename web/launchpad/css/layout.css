@@ -7,6 +7,10 @@ body {
 	overflow-x: hidden;
 }
 
+#app-list-container, #app-container {
+	background-color: transparent;
+}
+
 a:hover {
 	text-decoration: none;
 }
@@ -19,7 +23,7 @@ a:hover {
 }
 
 #header h1 {
-	background:  url("../../img/logo.png") no-repeat scroll 0 0 transparent;
+	background:  url(../../img/logo.png) no-repeat scroll 0 0 transparent;
 	height:      31px;
 	left:        15px;
 	line-height: 600px;
@@ -618,7 +622,7 @@ div.dataTables_wrapper .ui-widget-header {
 }
 
 .line {
-	background: url("../img/line.png") repeat-x scroll 0 0 transparent;
+	background: url(../../img/line.png) repeat-x scroll 0 0 transparent;
 	display:    block;
 	height:     8px;
 }
@@ -1268,6 +1272,10 @@ html, body {
 	height: 38px;
 }
 
+iframe.app-loader:empty {
+	background-color: transparent;
+}
+
 #app-list-container {
 	margin:             0;
 	bottom:             0;
@@ -1280,7 +1288,6 @@ html, body {
 	box-shadow:         inset 0 3px 3px 0 rgba(0, 0, 0, .5);
 	overflow-y:         auto;
 	overflow-x:         hidden;
-
 }
 
 #app-list-container table {

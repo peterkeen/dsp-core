@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# @(#)$Id: scriptHelpers.sh,v 1.02 2011-12-12 jablan $
+# @(#)$Id: colors.sh,v 1.03 2014-02-21 jablan $
 #
-# Some helper junk
+# Some console helper junk
 #
 
 # Don't re-include

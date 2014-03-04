@@ -15,8 +15,8 @@
 	<!-- DreamFactory Typography Css -->
 	<link rel="stylesheet" href="/css/df-custom-bs.css">
 	<link rel="stylesheet" href="/css/forms.css">
-	<!--[if lt IE 9]>
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
 	<script src="/js/html5shiv.js"></script>
 	<script src="/js/respond.min.js"></script>
 	<![endif]-->
@@ -29,16 +29,23 @@
 	<title>DreamFactory Services Platform&trade;</title>
 </head>
 <body>
-<div id="wrap">
-	<div class="page-logo"><img src="/images/df-apple-touch-icon.png" alt=""></div>
-	<?php echo $content; ?>
+<div id="navbar-container">
+	<div class="navbar navbar-static-top">
+
+		<div class="navbar-spacer">
+			<div class="pull-left df-logo"><a href="/"><img src="/img/logo.png"></a></div>
+		</div>
+
+	</div>
 </div>
-<div id="push"></div>
+<div id="wrap">
+	<?php echo $content; ?>
+	<div id="push"></div>
+</div>
 <div id="footer">
 	<div class="container align-center">
-		<p class="footer-text">&copy; <a href="http://dreamfactory.com">DreamFactory Software, Inc.</a>
+		<p class="footer-text">&copy; <a href="http://www.dreamfactory.com">DreamFactory Software, Inc.</a>
 			<?php echo date( 'Y' ); ?>. All Rights Reserved.
-			<span class="footer-logo pull-right"><img src="/images/df-apple-touch-icon.png" alt=""></span>
 		</p>
 	</div>
 </div>

@@ -3,7 +3,7 @@
  * This file is part of the DreamFactory Services Platform(tm) (DSP)
  *
  * DreamFactory Services Platform(tm) <http://github.com/dreamfactorysoftware/dsp-core>
- * Copyright 2012-2013 DreamFactory Software, Inc. <developer-support@dreamfactory.com>
+ * Copyright 2012-2014 DreamFactory Software, Inc. <support@dreamfactory.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,19 @@
  * console.config.php
  * This is the main configuration file all CLI applications
  */
+if ( !defined( 'DSP_VERSION' ) )
+{
+	require __DIR__ . '/constants.config.php';
+}
+
 if ( 'cli' == PHP_SAPI )
 {
 //	throw new Exception( 'Console mode not yet supported.' );
 }
+
+/**
+ * Aliases
+ */
+file_exists( __DIR__ . ALIASES_CONFIG_PATH ) && require __DIR__ . ALIASES_CONFIG_PATH;
+
+return array();

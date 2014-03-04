@@ -3,7 +3,7 @@
  * This file is part of the DreamFactory Services Platform(tm) (DSP)
  *
  * DreamFactory Services Platform(tm) <http://github.com/dreamfactorysoftware/dsp-core>
- * Copyright 2012-2013 DreamFactory Software, Inc. <developer-support@dreamfactory.com>
+ * Copyright 2012-2014 DreamFactory Software, Inc. <support@dreamfactory.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,38 +21,40 @@ use DreamFactory\Yii\Utility\Validate;
 
 /**
  * @var WebController $this
- * @var LoginForm     $model
+ * @var ActivateForm  $model
  * @var CActiveForm   $form
  */
 
 Validate::register(
-	'form#login-form',
+	'form#activate-form',
 	array(
 		 'ignoreTitle'    => true,
 		 'errorClass'     => 'error',
-		 'errorPlacement' => 'function(error,element){error.appendTo(element.parent("div"));error.css("margin","-10px 0 0");}',
+		 'errorPlacement' => 'function(error,element){error.appendTo(element.closest("div.form-group"));error.css("margin","-10px 0 0");}',
+		 'rules'          => array(
+			 'ActivateForm[username]' => array(
+				 'required'  => true,
+				 'minlength' => 5,
+			 ),
+			 'ActivateForm[password]' => array(
+				 'required' => true,
+			 ),
+		 ),
 	)
 );
-
-$_headline = ( isset( $activated ) && $activated ) ? 'Welcome!' : 'Activate Your New DSP!';
 ?>
 <div class="container" id="formbox">
-	<h2><?php echo $_headline; ?></h2>
+	<h2>DSP Activation</h2>
 
-	<p>Thank you for installing the DreamFactory Services Platform&trade;. This DSP needs to be activated in order to continue.
-		If you haven't yet registered for a user account on <a href="https://www.dreamfactory.com">http://www.dreamfactory.com</a>,
-		registration allows you to receive free technical support and is quick and easy, just click
-		<a href="https://www.dreamfactory.com/user/register">here</a>.
-	</p>
-
-	<p>Once you've registered, you may enter those credentials below to speed up the activation process.
-		Otherwise, select 'Skip' to manually proceed with activation.
+	<p>To activate this DSP, please enter your <a href="https://www.dreamfactory.com">www.dreamfactory.com</a>
+		email and password. You will automatically be made an admin user of this DSP. You may modify this user or
+		add more users once you've logged in.
 	</p>
 
 	<?php $form = $this->beginWidget(
 		'CActiveForm',
 		array(
-			 'id'                     => 'login-form',
+			 'id'                     => 'activate-form',
 			 'enableClientValidation' => true,
 			 'clientOptions'          => array(
 				 'validateOnSubmit' => true,
@@ -60,26 +62,26 @@ $_headline = ( isset( $activated ) && $activated ) ? 'Welcome!' : 'Activate Your
 		)
 	); ?>
 
-	<input type="hidden" name="skipped" id="skipped" value="0">
 	<div class="form-group">
-		<label for="LoginForm_username" class="sr-only">Email Address</label>
+		<label for="ActivateForm_username" class="sr-only">Email Address</label>
 
 		<div class="input-group">
 			<span class="input-group-addon bg_dg"><i class="fa fa-envelope fa-fw"></i></span>
 
-			<input tabindex="1" class="form-control email" autofocus type="email" id="LoginForm_username" name="LoginForm[username]"
-				   placeholder="Email Address" />
+			<input tabindex="1" class="form-control email required" autofocus type="email" id="ActivateForm_username"
+				   name="ActivateForm[username]" placeholder="Email Address"
+				   value="<?php echo( $model->username ? $model->username : '' ); ?>" />
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label for="LoginForm_password" class="sr-only">Password</label>
+		<label for="ActivateForm_password" class="sr-only">Password</label>
 
 		<div class="input-group">
 			<span class="input-group-addon bg_ly"><i class="fa fa-lock fa-fw"></i></span>
 
-			<input tabindex="2" class="form-control password" type="password" id="LoginForm_password" name="LoginForm[password]"
-				   placeholder="Password" />
+			<input tabindex="2" class="form-control password required" type="password" id="ActivateForm_password"
+				   name="ActivateForm[password]" placeholder="Password" />
 		</div>
 	</div>
 
@@ -87,18 +89,10 @@ $_headline = ( isset( $activated ) && $activated ) ? 'Welcome!' : 'Activate Your
 
 	<div class="form-buttons">
 		<button type="submit" class="btn btn-success pull-right">Activate</button>
-		<button type="button" id="btn-skip" class="btn btn-default pull-left">Skip</button>
 	</div>
 
 	<?php $this->endWidget(); ?>
 
 </div>
 <script type="text/javascript">
-jQuery(function($) {
-	$('#btn-skip').on('click', function(e) {
-		e.preventDefault();
-		$('input#skipped').val(1);
-		$('form#login-form').submit();
-	});
-});
 </script>

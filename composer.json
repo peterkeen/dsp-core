@@ -51,6 +51,7 @@
 		"kisma/kisma":                          "~0.2@stable",
 		"dreamfactory/oasys":                   "~0.4@stable",
 		"dreamfactory/yii":                     "=1.1.13",
+		"dreamfactory/oasys":                   "~0.4@stable",
 		"dreamfactory/lib-php-common":          "~1.4@stable",
 		"dreamfactory/lib-php-common-yii":      "~1.4@stable",
 		"dreamfactory/lib-php-common-platform": "~1.4@stable"
@@ -70,7 +71,7 @@
 	"minimum-stability": "dev",
 	"extra":             {
 		"branch-alias": {
-			"dev-develop": "1.4.x-dev"
+			"dev-develop": "1.5.x-dev"
 		}
 	}
 }

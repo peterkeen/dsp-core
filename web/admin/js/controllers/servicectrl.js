@@ -400,13 +400,16 @@ var ServiceCtrl = function ($scope, Service, $rootScope) {
                 break;
         }
     };
+
     Scope.showSwagger = function () {
-        $rootScope.loadSwagger(this.service.api_name)
+        //$rootScope.loadSwagger(this.service.api_name)
+        Scope.$broadcast('swagger:on', this.service.api_name);
         Scope.action = "Explore ";
         $('#step1').hide();
         $('#file-manager').hide();
         $("#button_holder").hide();
     };
+
     Scope.showEmailFields = function(){
 
         switch (Scope.email_type) {
@@ -474,7 +477,10 @@ var ServiceCtrl = function ($scope, Service, $rootScope) {
         $('#step1').show();
         $('#file-manager').hide();
         $("#button_holder").show();
-        $("#swagger, #swagger iframe, #swagctrl").hide();
+
+        Scope.$broadcast('swagger:off');
+
+        //$("#swagger, #swagger iframe, #swagctrl").hide();
         Scope.service = angular.copy(this.service);
         if (Scope.service.type.indexOf("Email Service") != -1) {
             Scope.service.type = "Email Service";

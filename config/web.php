@@ -3,7 +3,7 @@
  * This file is part of the DreamFactory Services Platform(tm) (DSP)
  *
  * DreamFactory Services Platform(tm) <http://github.com/dreamfactorysoftware/dsp-core>
- * Copyright 2012-2013 DreamFactory Software, Inc. <developer-support@dreamfactory.com>
+ * Copyright 2012-2014 DreamFactory Software, Inc. <support@dreamfactory.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-use DreamFactory\Platform\Utility\Fabric;
-
 /**
  * web.php
  * This is the main configuration file for the DreamFactory Services Platform server application.
@@ -51,7 +49,6 @@ return array(
 	'resourceNamespaces' => array(
 		'DreamFactory\\Platform\\Resources',
 		'DreamFactory\\Platform\\Resources\\System',
-		'DreamFactory\\Platform\\Resources\\Portal',
 		'DreamFactory\\Platform\\Resources\\User',
 	),
 	/**
@@ -126,7 +123,7 @@ return array(
 		//	User configuration
 		'user'         => array(
 			'allowAutoLogin' => true,
-			'loginUrl'       => array( $_defaultController . '/activate' ),
+			'loginUrl'       => array( $_defaultController . '/login' ),
 		),
 		'clientScript' => array(
 			'scriptMap' => array(

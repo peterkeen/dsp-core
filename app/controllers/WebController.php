@@ -3,7 +3,7 @@
  * This file is part of the DreamFactory Services Platform(tm) (DSP)
  *
  * DreamFactory Services Platform(tm) <http://github.com/dreamfactorysoftware/dsp-core>
- * Copyright 2012-2013 DreamFactory Software, Inc. <developer-support@dreamfactory.com>
+ * Copyright 2012-2014 DreamFactory Software, Inc. <support@dreamfactory.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,12 @@ use DreamFactory\Oasys\Oasys;
 use DreamFactory\Oasys\Stores\FileSystem;
 use DreamFactory\Platform\Exceptions\BadRequestException;
 use DreamFactory\Platform\Exceptions\ForbiddenException;
+use DreamFactory\Platform\Exceptions\RestException;
 use DreamFactory\Platform\Interfaces\PlatformStates;
+use DreamFactory\Platform\Resources\System\Config;
+use DreamFactory\Platform\Resources\User\Password;
+use DreamFactory\Platform\Resources\User\Profile;
+use DreamFactory\Platform\Resources\User\Register;
 use DreamFactory\Platform\Resources\User\Session;
 use DreamFactory\Platform\Services\AsgardService;
 use DreamFactory\Platform\Services\SystemManager;
@@ -37,6 +42,7 @@ use Kisma\Core\Utility\Curl;
 use Kisma\Core\Utility\FilterInput;
 use Kisma\Core\Utility\Log;
 use Kisma\Core\Utility\Option;
+use Kisma\Core\Utility\Storage;
 
 /**
  * WebController.php
@@ -121,10 +127,16 @@ class WebController extends BaseWebController
 					'initSchema',
 					'initData',
 					'initAdmin',
+					'upgradeSchema',
 					'authorize',
 					'remoteLogin',
 					'maintenance',
 					'welcome',
+					'securityQuestion',
+					'register',
+					'confirmRegister',
+					'confirmInvite',
+					'confirmPassword',
 				),
 				'users'   => array( '*' ),
 			),
@@ -133,8 +145,8 @@ class WebController extends BaseWebController
 				'allow',
 				'actions' => array(
 					'upgrade',
-					'upgradeSchema',
-					'initAdmin',
+					'password',
+					'profile',
 					'environment',
 					'metrics',
 					'fileTree',
@@ -157,108 +169,6 @@ class WebController extends BaseWebController
 		$this->layout = 'maintenance';
 		$this->render( 'maintenance' );
 		die();
-	}
-
-	protected function _initSystemSplash()
-	{
-		$this->render(
-			 '_splash',
-			 array(
-				 'for' => PlatformStates::INIT_REQUIRED,
-			 )
-		);
-
-		$this->actionInitSystem();
-	}
-
-	public function actionActivate()
-	{
-		//	Clear the skipped flag...
-		Pii::setState( 'app.registration_skipped', false );
-
-		$_model = new \LoginForm();
-
-		//	Came from login form? Don't do drupal auth, do dsp auth
-		$_fromLogin = ( 0 != Option::get( $_POST, 'login-only', 0 ) );
-
-		//	Did we come because we need to log in?
-		if ( !Pii::postRequest() && $this->_activated )
-		{
-			if ( null !== ( $_returnUrl = Pii::user()->getReturnUrl() ) && 200 == Option::server( 'REDIRECT_STATUS' ) )
-			{
-				$this->actionLogin( true );
-
-				return;
-			}
-		}
-		else
-		{
-			if ( 1 == Option::get( $_POST, 'skipped', 0 ) )
-			{
-				Pii::setState( 'app.registration_skipped', true );
-				$this->redirect( '/' . $this->id . '/initAdmin' );
-
-				return;
-			}
-		}
-
-		if ( isset( $_POST, $_POST['LoginForm'] ) )
-		{
-			$_model->attributes = $_POST['LoginForm'];
-			$_model->setDrupalAuth( ( 0 == Option::get( $_POST, 'login-only', 0 ) ) );
-
-			if ( !empty( $_model->username ) && !empty( $_model->password ) )
-			{
-				//	Validate user input and redirect to the previous page if valid
-				if ( $_model->validate() && $_model->login() )
-				{
-					if ( !$this->_activated )
-					{
-						SystemManager::initAdmin();
-					}
-
-					if ( null === ( $_returnUrl = Pii::user()->getReturnUrl() ) )
-					{
-						$_returnUrl = Pii::url( $this->id . '/index' );
-					}
-
-					$this->redirect( $_returnUrl );
-
-					return;
-				}
-				else
-				{
-//					$_model->addError( 'username', 'Invalid user name and password combination.' );
-
-					//	Came from login form? Don't do drupal auth, do dsp auth
-					if ( $_fromLogin )
-					{
-						$this->actionLogin( true );
-
-						return;
-					}
-				}
-			}
-			else
-			{
-				if ( !$this->_activated )
-				{
-					$this->redirect( '/' . $this->id . '/initAdmin' );
-				}
-				else
-				{
-					$this->redirect( '/' . $this->id . '/index' );
-				}
-			}
-		}
-
-		$this->render(
-			 'activate',
-			 array(
-				 'model'     => $_model,
-				 'activated' => $this->_activated,
-			 )
-		);
 	}
 
 	/**
@@ -302,20 +212,34 @@ class WebController extends BaseWebController
 					break;
 
 				case PlatformStates::INIT_REQUIRED:
-					$this->redirect( '/' . $this->id . '/initSystem' );
-					break;
-
-				case PlatformStates::ADMIN_REQUIRED:
-					$this->redirect( '/' . $this->id . '/activate' );
+					$this->redirect( $this->_getRedirectUrl( 'initSystem' ) );
 					break;
 
 				case PlatformStates::SCHEMA_REQUIRED:
+					$this->redirect( $this->_getRedirectUrl( 'upgradeSchema' ) );
+					break;
+
 				case PlatformStates::UPGRADE_REQUIRED:
-					$this->redirect( '/' . $this->id . '/upgradeSchema' );
+					$this->redirect( $this->_getRedirectUrl( 'upgrade' ) );
+					break;
+
+				case PlatformStates::ADMIN_REQUIRED:
+					if ( Fabric::fabricHosted() )
+					{
+						$this->redirect( $this->_getRedirectUrl( 'activate' ) );
+					}
+					else
+					{
+						$this->redirect( $this->_getRedirectUrl( 'initAdmin' ) );
+					}
 					break;
 
 				case PlatformStates::DATA_REQUIRED:
-					$this->redirect( '/' . $this->id . '/initData' );
+					$this->redirect( $this->_getRedirectUrl( 'initData' ) );
+					break;
+
+				case PlatformStates::WELCOME_REQUIRED:
+					$this->redirect( $this->_getRedirectUrl( 'welcome' ) );
 					break;
 			}
 		}
@@ -343,16 +267,309 @@ class WebController extends BaseWebController
 		}
 	}
 
+	protected function _initSystemSplash()
+	{
+		$this->render(
+			'_splash',
+			array(
+				 'for' => PlatformStates::INIT_REQUIRED,
+			)
+		);
+	}
+
+	/**
+	 * Activates the system
+	 */
+	public function actionInitSystem()
+	{
+		// put our schema in the empty database
+		SystemManager::initSchema();
+
+		// let the system figure out the next state
+		$this->redirect( '/' );
+	}
+
+	/**
+	 * Displays the system init schema page
+	 */
+	public function actionUpgradeSchema()
+	{
+		$_model = new UpgradeSchemaForm();
+
+		if ( isset( $_POST, $_POST['UpgradeSchemaForm'] ) )
+		{
+			$_model->attributes = $_POST['UpgradeSchemaForm'];
+
+			if ( $_model->validate() )
+			{
+				SystemManager::upgradeSchema();
+				$this->redirect( '/' );
+
+				return;
+			}
+			else
+			{
+				// Log::debug( 'Failed validation' );
+			}
+
+			$this->refresh();
+		}
+
+		$this->render(
+			'upgradeSchema',
+			array(
+				 'model' => $_model
+			)
+		);
+	}
+
+	/**
+	 * Adds the first admin from a form
+	 */
+	public function actionInitAdmin()
+	{
+		if ( $this->_activated )
+		{
+			$this->redirect( '/' );
+		}
+
+		//	Clear the skipped flag...
+		Pii::setState( 'app.registration_skipped', false );
+
+		$_model = new InitAdminForm();
+
+		if ( isset( $_POST, $_POST['InitAdminForm'] ) )
+		{
+			$_model->attributes = $_POST['InitAdminForm'];
+
+			if ( $_model->validate() )
+			{
+				try
+				{
+					SystemManager::initAdmin( $_model->attributes );
+					$this->redirect( '/' );
+
+					return;
+				}
+				catch ( \Exception $_ex )
+				{
+					$_model->addError( 'email', $_ex->getMessage() );
+				}
+			}
+		}
+
+		$this->render(
+			'initAdmin',
+			array(
+				 'model' => $_model
+			)
+		);
+	}
+
+	/**
+	 * First-time hosted activation page,
+	 * Adds the first admin, based on DF user authentication
+	 */
+	public function actionActivate()
+	{
+		if ( $this->_activated )
+		{
+			$this->redirect( '/' );
+		}
+
+		$_model = new ActivateForm();
+
+		if ( isset( $_POST, $_POST['ActivateForm'] ) )
+		{
+			$_model->attributes = $_POST['ActivateForm'];
+
+			//	Validate user input and redirect to the previous page if valid
+			if ( $_model->validate() && $_model->activate() )
+			{
+				try
+				{
+					SystemManager::initAdmin();
+					$this->redirect( $this->_getRedirectUrl() );
+
+					return;
+				}
+				catch ( \Exception $_ex )
+				{
+					$_model->addError( 'username', $_ex->getMessage() );
+				}
+			}
+			else
+			{
+				$_model->addError( 'username', 'Invalid username and password combination.' );
+			}
+		}
+
+		$this->render(
+			'activate',
+			array(
+				 'model' => $_model,
+			)
+		);
+	}
+
+	/**
+	 * Displays the system init data page
+	 */
+	public function actionInitData()
+	{
+		// just do, no need to ask
+		//		$_model = new InitDataForm();
+		//
+		//		if ( isset( $_POST, $_POST['InitDataForm'] ) )
+		//		{
+		//			$_model->attributes = $_POST['InitDataForm'];
+		//
+		//			if ( $_model->validate() )
+		//			{
+		SystemManager::initData();
+		$this->redirect( '/' );
+		//			}
+		//
+		//			$this->refresh();
+		//		}
+		//
+		//		$this->render(
+		//			'initData',
+		//			array(
+		//				 'model' => $_model
+		//			)
+		//		);
+	}
+
+	/**
+	 * Displays the login page
+	 */
+	public function actionLogin( $redirected = false )
+	{
+		if ( !Pii::guest() )
+		{
+			$this->redirect( '/' );
+		}
+
+		$_model = new LoginForm();
+
+		// collect user input data
+		if ( isset( $_POST, $_POST['LoginForm'] ) )
+		{
+			$_model->attributes = $_POST['LoginForm'];
+
+			if ( 1 == Option::get( $_POST, 'forgot', 0 ) )
+			{
+				try
+				{
+					$_result = Password::passwordReset( $_model->username );
+					$_question = Option::get( $_result, 'security_question' );
+					if ( !empty( $_question ) )
+					{
+						Yii::app()->user->setFlash( 'security-email', $_model->username );
+						Yii::app()->user->setFlash( 'security-question', $_question );
+						$this->redirect( $this->_getRedirectUrl( 'securityQuestion' ) );
+
+						return;
+					}
+					elseif ( Option::getBool( $_result, 'success' ) )
+					{
+						Yii::app()->user->setFlash( 'login-form', 'A password reset confirmation has been sent to this email.' );
+					}
+				}
+				catch ( \Exception $_ex )
+				{
+					$_model->addError( 'username', $_ex->getMessage() );
+				}
+			}
+			//	Validate user input and redirect to the previous page if valid
+			elseif ( $_model->validate() )
+			{
+				$this->redirect( $this->_getRedirectUrl() );
+
+				return;
+			}
+		}
+
+		$_providers = array();
+
+		$this->render(
+			'login',
+			array(
+				 'model'          => $_model,
+				 'activated'      => $this->_activated,
+				 'redirected'     => $redirected,
+				 'loginProviders' => $_providers,
+			)
+		);
+	}
+
+	public function actionSecurityQuestion()
+	{
+		if ( !Pii::guest() )
+		{
+			$this->redirect( '/' );
+		}
+
+		$_model = new SecurityForm();
+
+		// collect user input data
+		if ( isset( $_POST, $_POST['SecurityForm'] ) )
+		{
+			$_model->attributes = $_POST['SecurityForm'];
+
+			//	Validate user input and redirect to the previous page if valid
+			if ( $_model->validate() )
+			{
+				try
+				{
+					$_identity = Password::changePasswordBySecurityAnswer(
+						$_model->email,
+						$_model->answer,
+						$_model->password,
+						true,
+						true
+					);
+
+					if ( Pii::user()->login( $_identity ) )
+					{
+						$this->redirect( $this->_getRedirectUrl() );
+
+						return;
+					}
+
+					$_model->addError( null, 'Password changed successfully, but failed to automatically login.' );
+				}
+				catch ( \Exception $_ex )
+				{
+					$_model->addError( 'answer', $_ex->getMessage() );
+				}
+			}
+		}
+		else
+		{
+			// this is initially redirected from login screen - forgot password scenario
+			$_model->email = Yii::app()->user->getFlash( 'security-email' );
+			$_model->question = Yii::app()->user->getFlash( 'security-question' );
+			if ( empty( $_model->email ) || empty( $_model->question ) )
+			{
+				$_model->addError( 'answer', 'Error retrieving security question.' );
+			}
+		}
+
+		$this->render(
+			'securityQuestion',
+			array(
+				 'model' => $_model,
+			)
+		);
+	}
+
 	/**
 	 * First-time Welcome page
 	 */
 	public function actionWelcome()
 	{
-		if ( null === ( $_returnUrl = Pii::user()->getReturnUrl() ) )
-		{
-			$_returnUrl = Pii::url( $this->id . '/index' );
-		}
-
 		//	User cool too?
 		if ( null === ( $_user = ResourceStore::model( 'user' )->findByPk( Session::getCurrentUserId() ) ) )
 		{
@@ -367,184 +584,284 @@ class WebController extends BaseWebController
 		{
 			Log::debug( 'Forced removal of registration marker requested.' );
 			SystemManager::registerPlatform( $_user, false, true );
-			$this->redirect( $_returnUrl );
+			$this->redirect( $this->_getRedirectUrl() );
 		}
 
 		$_model = new SupportForm();
 
 		// collect user input data
-		if ( isset( $_POST['SupportForm'] ) )
+		if ( isset( $_POST, $_POST['SupportForm'] ) )
 		{
 			$_model->setAttributes( $_POST['SupportForm'] );
 
 			//	Validate user input and redirect to the previous page if valid
 			if ( $_model->validate() )
 			{
-				SystemManager::registerPlatform( $_user, $_model->getSkipped() );
+				try
+				{
+					SystemManager::registerPlatform( $_user, $_model->getSkipped() );
+					$this->redirect( $this->_getRedirectUrl() );
 
-				$this->redirect( $_returnUrl );
-
-				return;
+					return;
+				}
+				catch ( \Exception $_ex )
+				{
+					$_model->addError( null, $_ex->getMessage() );
+				}
 			}
 
 			$_model->addError( 'Problem', 'Registration System Unavailable' );
 		}
 
 		$this->render(
-			 'welcome',
-			 array(
+			'welcome',
+			array(
 				 'model' => $_model,
-			 )
+			)
 		);
 	}
 
 	/**
-	 * Displays the login page
+	 * Adds the registering user from a form
 	 */
-	public function actionLogin( $redirected = false )
+	public function actionRegister()
 	{
 		if ( !Pii::guest() )
 		{
 			$this->redirect( '/' );
 		}
 
-		$_model = new \LoginForm();
+		$_model = new RegisterUserForm();
 
-		// collect user input data
-		if ( isset( $_POST['LoginForm'] ) )
+		/** @var $_config Config */
+		if ( false === ( $_config = Config::getOpenRegistration() ) )
 		{
-			$_model->attributes = $_POST['LoginForm'];
-			$_model->setDrupalAuth( ( 0 == Option::get( $_POST, 'login-only', 0 ) ) );
-
-			//	Validate user input and redirect to the previous page if valid
-			if ( $_model->validate() && $_model->login() )
-			{
-				if ( null === ( $_returnUrl = Pii::user()->getReturnUrl() ) )
-				{
-					$_returnUrl = Pii::url( $this->id . '/index' );
-				}
-
-				$this->redirect( $_returnUrl );
-
-				return;
-			}
+			throw new BadRequestException( "Open registration for users is not currently enabled for this system." );
 		}
 
-		$this->render(
-			 'login',
-			 array(
-				 'model'      => $_model,
-				 'activated'  => $this->_activated,
-				 'redirected' => $redirected,
-			 )
-		);
-	}
+		$_viaEmail = ( null !== Option::get( $_config, 'open_reg_email_service_id' ) );
+		$_model->setViaEmail( $_viaEmail );
 
-	/**
-	 * Activates the system
-	 */
-	public function actionInitSystem()
-	{
-		SystemManager::initSystem();
-		$this->redirect( '/' );
-	}
-
-	/**
-	 * Displays the system init schema page
-	 */
-	public function actionUpgradeSchema()
-	{
-		$_model = new InitSchemaForm();
-
-		if ( isset( $_POST, $_POST['InitSchemaForm'] ) )
+		if ( isset( $_POST, $_POST['RegisterUserForm'] ) )
 		{
-			$_model->attributes = $_POST['InitSchemaForm'];
+			$_model->attributes = $_POST['RegisterUserForm'];
 
 			if ( $_model->validate() )
 			{
-				SystemManager::upgradeSchema();
-				$this->redirect( '/' );
-			}
-			else
-			{
-//				Log::debug( 'Failed validation' );
-			}
+				try
+				{
+					$_result = Register::userRegister( $_model->attributes, true, true );
 
-			$this->refresh();
+					if ( $_viaEmail )
+					{
+						if ( Option::getBool( $_result, 'success' ) )
+						{
+							Yii::app()->user->setFlash( 'register-user-form', 'A registration confirmation has been sent to this email.' );
+						}
+					}
+					else
+					{
+						// result should be identity
+						if ( Pii::user()->login( $_result ) )
+						{
+							$this->redirect( $this->_getRedirectUrl() );
+
+							return;
+						}
+
+						$_model->addError( null, 'Registration successful, but failed to automatically login.' );
+					}
+				}
+				catch ( \Exception $_ex )
+				{
+					$_model->addError( null, $_ex->getMessage() );
+				}
+			}
 		}
 
 		$this->render(
-			 'initSchema',
-			 array(
-				 'model' => $_model
-			 )
+			'register',
+			array(
+				 'model' => $_model,
+				 'backUrl' => $this->_getRedirectUrl()
+			)
 		);
 	}
 
-	/**
-	 * Adds the first admin, based on DF authenticated login
-	 */
-	public function actionInitAdmin()
+	public function actionConfirmRegister()
 	{
-		if ( $this->_activated )
+		$this->_userConfirm( 'register' );
+	}
+
+	public function actionConfirmInvite()
+	{
+		$this->_userConfirm( 'invite' );
+	}
+
+	public function actionConfirmPassword()
+	{
+		$this->_userConfirm( 'password' );
+	}
+
+	protected function _userConfirm( $reason )
+	{
+		if ( !Pii::guest() )
 		{
-//			Log::debug( 'initAdmin activated' );
-			SystemManager::initAdmin();
 			$this->redirect( '/' );
 		}
 
-//		Log::debug( 'initAdmin NOT activated' );
+		$_model = new ConfirmUserForm();
 
-		$_model = new InitAdminForm();
-
-		if ( isset( $_POST, $_POST['InitAdminForm'] ) )
+		// collect user input data
+		if ( isset( $_POST, $_POST['ConfirmUserForm'] ) )
 		{
-			$_model->attributes = $_POST['InitAdminForm'];
+			$_model->attributes = $_POST['ConfirmUserForm'];
 
+			//	Validate user input and redirect to the previous page if valid
 			if ( $_model->validate() )
 			{
-				SystemManager::initAdmin();
-				$this->redirect( '/' );
-			}
+				try
+				{
+					switch ( $reason )
+					{
+						case 'register':
+							$_identity = Register::userConfirm(
+								$_model->email,
+								$_model->code,
+								$_model->password,
+								true,
+								true
+							);
+							break;
+						default:
+							$_identity = Password::changePasswordByCode(
+								$_model->email,
+								$_model->code,
+								$_model->password,
+								true,
+								true
+							);
+							break;
+					}
 
-			$this->refresh();
+					if ( Pii::user()->login( $_identity ) )
+					{
+						$this->redirect( $this->_getRedirectUrl() );
+
+						return;
+					}
+
+					$_model->addError( null, 'Password changed successfully, but failed to automatically login.' );
+				}
+				catch ( \Exception $_ex )
+				{
+					$_model->addError( 'email', $_ex->getMessage() );
+				}
+			}
 		}
 
 		$this->render(
-			 'initAdmin',
-			 array(
-				 'model' => $_model
-			 )
+			'confirm',
+			array(
+				 'model'  => $_model,
+				 'reason' => $reason,
+			)
 		);
 	}
 
 	/**
-	 * Displays the system init data page
+	 * Displays the password reset page
 	 */
-	public function actionInitData()
+	public function actionPassword()
 	{
-		// just do, no need to ask
-//		$_model = new InitDataForm();
-//
-//		if ( isset( $_POST, $_POST['InitDataForm'] ) )
-//		{
-//			$_model->attributes = $_POST['InitDataForm'];
-//
-//			if ( $_model->validate() )
-//			{
-		SystemManager::initData();
-		$this->redirect( '/' );
-//			}
-//
-//			$this->refresh();
-//		}
-//
-//		$this->render(
-//			'initData',
-//			array(
-//				 'model' => $_model
-//			)
-//		);
+		if ( Pii::guest() )
+		{
+			$this->_redirectError( 'You must be logged in to change your password.' );
+		}
+
+		$_model = new PasswordForm();
+
+		// collect user input data
+		if ( isset( $_POST, $_POST['PasswordForm'] ) )
+		{
+			$_model->attributes = $_POST['PasswordForm'];
+
+			//	Validate user input and redirect to the previous page if valid
+			if ( $_model->validate() )
+			{
+				try
+				{
+					$_userId = Session::getCurrentUserId();
+					$_result = Password::changePassword( $_userId, $_model->old_password, $_model->new_password );
+
+					if ( Option::getBool( $_result, 'success' ) )
+					{
+						Yii::app()->user->setFlash( 'password-form', 'Your password has been successfully updated.' );
+					}
+				}
+				catch ( \Exception $_ex )
+				{
+					$_model->addError( null, $_ex->getMessage() );
+				}
+			}
+		}
+
+		$this->render(
+			'password',
+			array(
+				 'model'   => $_model,
+				 'backUrl' => $this->_getRedirectUrl()
+			)
+		);
+	}
+
+	/**
+	 * Updates the user profile from a form
+	 */
+	public function actionProfile()
+	{
+		if ( Pii::guest() )
+		{
+			$this->_redirectError( 'You must be logged in to change your profile.' );
+		}
+
+		$_model = new ProfileForm();
+
+		if ( isset( $_POST, $_POST['ProfileForm'] ) )
+		{
+			$_model->attributes = $_POST['ProfileForm'];
+
+			if ( $_model->validate() )
+			{
+				try
+				{
+					$_userId = Session::getCurrentUserId();
+					$_result = Profile::changeProfile( $_userId, $_model->attributes );
+
+					if ( Option::getBool( $_result, 'success' ) )
+					{
+						Yii::app()->user->setFlash( 'profile-form', 'Your profile has been successfully updated.' );
+					}
+				}
+				catch ( \Exception $_ex )
+				{
+					$_model->addError( null, $_ex->getMessage() );
+				}
+			}
+		}
+		else
+		{
+			$_userId = Session::getCurrentUserId();
+			$_model->attributes = Profile::getProfile( $_userId );
+		}
+
+		$this->render(
+			'profile',
+			array(
+				 'model' => $_model,
+				 'backUrl' => $this->_getRedirectUrl()
+			)
+		);
 	}
 
 	/**
@@ -608,10 +925,10 @@ class WebController extends BaseWebController
 		}
 
 		$this->render(
-			 'upgradeDsp',
-			 array(
+			'upgradeDsp',
+			array(
 				 'model' => $_model
-			 )
+			)
 		);
 	}
 
@@ -728,12 +1045,12 @@ class WebController extends BaseWebController
 		Oasys::setStore( $_store = new FileSystem( $_sid = session_id() ) );
 
 		$_config = Provider::buildConfig(
-						   $_providerModel,
-						   Pii::getState( $_providerId . '.user_config', array() ),
-						   array(
-							   'flow_type'    => $_flow,
-							   'redirect_uri' => Curl::currentUrl( false ) . '?pid=' . $_providerId,
-						   )
+			$_providerModel,
+			Pii::getState( $_providerId . '.user_config', array() ),
+			array(
+				 'flow_type'    => $_flow,
+				 'redirect_uri' => Curl::currentUrl( false ) . '?pid=' . $_providerId,
+			)
 		);
 
 		Log::debug( 'remote login config: ' . print_r( $_config, true ) );
@@ -766,8 +1083,6 @@ class WebController extends BaseWebController
 
 	/**
 	 * Handle inbound redirect from various services
-	 *
-	 * @throws DreamFactory\Common\Exceptions\RestException
 	 */
 	public function actionAuthorize()
 	{
@@ -826,5 +1141,25 @@ class WebController extends BaseWebController
 	protected function _redirectError( $message, $url = '/' )
 	{
 		$this->redirect( $url . '?error=' . urlencode( $message ) );
+	}
+
+	protected function _getRedirectUrl( $action = null )
+	{
+		if ( !empty( $action ) )
+		{
+			// forward to that action page
+			$_returnUrl = '/' . $this->id . '/' . $action;
+		}
+		else
+		{
+			// redirect to back from which you came
+			if ( null === ( $_returnUrl = Pii::user()->getReturnUrl() ) )
+			{
+				// or take me home
+				$_returnUrl = Pii::url( $this->id . '/index' );
+			}
+		}
+
+		return $_returnUrl;
 	}
 }

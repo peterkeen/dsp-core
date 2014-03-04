@@ -18,7 +18,7 @@ Main stylesheet for LaunchPad
 
 #app-list-container {
 	/*background-image: url('http://galleryheart.com/wp-content/uploads/2012/02/30_Mind-Blowing-Examples-of-Creative-Art-7.jpg');*/
-	background:      #222 url('../img/launchpad_bg_gray.png') no-repeat;
+	background:      #222 url('/img/launchpad_bg_gray.png') no-repeat;
 	background-size: cover;
 }
 

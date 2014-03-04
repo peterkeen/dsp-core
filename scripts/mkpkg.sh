@@ -11,7 +11,7 @@
 #
 
 # Get some help
-. scriptHelpers.sh
+. `dirname $0`/colors.sh
 
 # Methods
 usage() {

@@ -3,7 +3,7 @@
  * This file is part of the DreamFactory Services Platform(tm) (DSP)
  *
  * DreamFactory Services Platform(tm) <http://github.com/dreamfactorysoftware/dsp-core>
- * Copyright 2012-2013 DreamFactory Software, Inc. <developer-support@dreamfactory.com>
+ * Copyright 2012-2014 DreamFactory Software, Inc. <support@dreamfactory.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,10 +26,10 @@ class InitAdminForm extends CFormModel
 {
 	public $email;
 	public $password;
-	public $passwordRepeat;
-	public $firstName;
-	public $lastName;
-	public $displayName;
+	public $password_repeat;
+	public $first_name;
+	public $last_name;
+	public $display_name;
 
 	/**
 	 * Declares the validation rules.
@@ -38,10 +38,10 @@ class InitAdminForm extends CFormModel
 	{
 		return array(
 			// names, password, and email are required
-			array( 'email, password, passwordRepeat, lastName, firstName', 'required' ),
+			array( 'email, password, password_repeat, last_name, first_name, display_name', 'required' ),
 			// password repeat must match password
-			array( 'passwordRepeat', 'required' ),
-			array( 'passwordRepeat', 'compare', 'compareAttribute' => 'password' ),
+			array( 'password_repeat', 'required' ),
+			array( 'password_repeat', 'compare', 'compareAttribute' => 'password' ),
 			// email has to be a valid email address
 			array( 'email', 'email' ),
 		);
@@ -55,12 +55,12 @@ class InitAdminForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'email'          => 'Email Address',
-			'password'       => 'Desired Password',
-			'passwordRepeat' => 'Verify Password',
-			'firstName'      => 'First Name',
-			'lastName'       => 'Last Name',
-			'displayName'    => 'Display Name',
+			'email'           => 'Email Address',
+			'password'        => 'Desired Password',
+			'password_repeat' => 'Verify Password',
+			'first_name'      => 'First Name',
+			'last_name'       => 'Last Name',
+			'display_name'    => 'Display Name',
 		);
 	}
 

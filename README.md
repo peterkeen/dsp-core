@@ -6,7 +6,7 @@
 [![Latest Stable Version](https://poser.pugx.org/dreamfactory/dsp-core/version.png)](https://packagist.org/packages/dreamfactory/dsp-core)
 [![Total Downloads](https://poser.pugx.org/dreamfactory/dsp-core/d/total.png)](https://packagist.org/packages/dreamfactory/dsp-core)
 
-This library contains common components for interacting with the DreamFactory Services Platform&trade;. It is, for all intents and purposes, the PHP SDK; and will be renamed as such, in the future.
+This library contains the DSP core server.
 
 Complete documentation is available on our [dedicated site](http://dreamfactorysoftware.github.io/)
 

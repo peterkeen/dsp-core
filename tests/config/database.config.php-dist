@@ -17,24 +17,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * keys.config.dist.php
+ * database.config.php-dist
  *
- * Copy this file to keys.config.php and place your free-form keys pairs. Nesting is allowed
+ * This file should contain any non-default database configuration used by your DSP.
  *
- * Some basic examples are shown below. Be sure to remove them from your copy.
+ * To use, copy this file to database.config.php and change the defaults in the array below.
  */
 return array(
-    /** Examples **/
-    'twitter.user_name'    => '@CoolTwitterName',
-    'twitter.timeline_url' => '/#CoolTwitterName',
-    /** Nesting Examples **/
-    'my_service'           => array(
-        'settings'       => array(
-            'deep_clean_arrays' => true,
-        ),
-        'auto_start'     => true,
-        'update_url'     => 'https://example.com/latest/',
-        'enable_logging' => true,
-    ),
+	'connectionString'      => 'mysql:host=localhost;port=3306;dbname=dreamfactory',
+	'username'              => 'dsp_user',
+	'password'              => 'dsp_user',
+	'emulatePrepare'        => true,
+	'charset'               => 'utf8',
+	'enableProfiling'       => defined( 'YII_DEBUG' ),
+	'enableParamLogging'    => defined( 'YII_DEBUG' ),
+	'schemaCachingDuration' => 3600,
 );

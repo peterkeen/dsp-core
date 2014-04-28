@@ -16,11 +16,13 @@ test.php
 test.sh
 *.moved.php
 *.setdev-on
-config/salt.config.php
-config/keys.config.php
 config/database.config.php
+config/keys.config.php
+config/salt.config.php
 tests/config/salt.config.php
+tests/config/database.config.php
 tests/config/keys.config.php
+tests/config/salt.config.php
 build/
 vendor/dreamfactory/oasys
 snallygaster

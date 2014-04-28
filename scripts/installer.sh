@@ -21,6 +21,9 @@
 #
 # CHANGELOG:
 #
+# v1.3.5
+#   Made bitnami-aware. Use PHP from stack instead of installed version
+#
 # v1.3.4
 #   Added "-V|--validate" command to validate installation structure
 #   Ensure that web/assets directory is created and has proper permissions
@@ -114,7 +117,7 @@
 ##
 ##	Initial settings
 ##
-VERSION=1.3.4
+VERSION=1.3.5
 SYSTEM_TYPE=`uname -s`
 COMPOSER=composer.phar
 NO_INTERACTION="--no-interaction"
@@ -157,7 +160,16 @@ else
 	B2=`tput sgr0`
 fi
 
-TAG="Mode: ${B1}Local${B2}"
+# Check for Bitnami install
+if [ `basename ${BASE}` = "htdocs" ] ; then
+	if [ -d "../../../php" ] ; then
+		PHP=../../../php/bin/php
+	fi
+
+	TAG="Mode: ${B1}Bitnami${B2}"
+else
+	TAG="Mode: ${B1}Local${B2}"
+fi
 
 ##
 ## Construct the various paths

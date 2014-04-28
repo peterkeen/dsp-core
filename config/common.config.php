@@ -178,9 +178,9 @@ return array_merge(
         'dsp.service_location_map'      => array(),
         /** Default services provided by all DSPs */
         'dsp.default_services'          => array(
-            array( 'api_name' => 'user', 'name' => 'User Login' ),
-            array( 'api_name' => 'system', 'name' => 'System Configuration' ),
-            array( 'api_name' => 'api_docs', 'name' => 'API Documentation' ),
+            array('api_name' => 'user', 'name' => 'User Login'),
+            array('api_name' => 'system', 'name' => 'System Configuration'),
+            array('api_name' => 'api_docs', 'name' => 'API Documentation'),
         ),
         /** The default application to start */
         'dsp.default_app'               => '/launchpad/index.html',

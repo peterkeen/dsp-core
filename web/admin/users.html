@@ -17,14 +17,14 @@
                         <td class="no-border">
                             <div ng-show="user.user_source == 0 && !user.confirmed"
                                  class="btn-group pull-right">
-                                <a class="btn btn-small btn-inverse" title="Reinvite unconfirmed user"
+                                <a class="btn btn-mini btn-inverse" title="Reinvite unconfirmed user"
                                    ng-click="invite()"><i class="icon-envelope"></i></a>
-                                <a class="btn btn-small btn-inverse" title="Delete this user" ng-click="delete()"><i
+                                <a class="btn btn-mini btn-inverse" title="Delete this user" ng-click="delete()"><i
                                         class="icon-trash"></i></a>
                             </div>
                             <div ng-show="user.user_source > 0 || (user.user_source == 0 && user.confirmed)"
                                  class="btn-group pull-right">
-                                <a class="btn btn-small btn-inverse" title="Delete this user" ng-click="delete()"><i
+                                <a class="btn btn-mini btn-inverse" title="Delete this user" ng-click="delete()"><i
                                         class="icon-trash"></i></a>
                             </div>
                         </td>
@@ -40,13 +40,13 @@
                 <div class="navbar-inner">
                     <div class="brand">Users</div>
                     <div class="btn-group pull-right">
-                        <a ng-click="promptForNew()" class="btn btn-small">
+                        <a ng-click="promptForNew()" class="btn btn-mini">
                             <li class="icon-plus-sign-alt"></li>
                             Create New User</a>
-                        <a ng-click="showImportModal()" class="btn btn-small">
+                        <a ng-click="showImportModal()" class="btn btn-mini">
                             <li class="icon-cloud-upload"></li>
                             Import Users</a>
-                        <a ng-click="showExportModal()" class="btn btn-small">
+                        <a ng-click="showExportModal()" class="btn btn-mini">
                             <li class="icon-cloud-download"></li>
                             Export Users</a>
                     </div>
@@ -190,7 +190,7 @@
                                     <th style="width:140px;">Allow User Update</th>
                                     <th class="no-border">
                                         <div class="btn-group pull-left">
-                                            <a class="btn btn-small btn-inverse" ng-click="">
+                                            <a class="btn btn-mini btn-inverse" ng-click="">
                                                 <i class="icon-plus" ng-click="newKey()"></i>
                                             </a>
                                         </div>
@@ -215,7 +215,7 @@
                                     </td>
                                     <td class="no-border">
                                         <div class="btn-group pull-left">
-                                            <a class="btn btn-small btn-inverse" ng-click="removeKey()">
+                                            <a class="btn btn-mini btn-inverse" ng-click="removeKey()">
                                                 <i class="icon-trash"></i>
                                             </a>
                                         </div>

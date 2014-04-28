@@ -18,9 +18,9 @@
  * limitations under the License.
  */
 /**
- * keys.config.dist.php
+ * keys.config.php-dist
  *
- * Copy this file to keys.config.php and place your free-form keys pairs. Nesting is allowed
+ * Copy this file to keys.config.php and place your free-form keys pairs. Nesting is allowed.
  *
  * Some basic examples are shown below. Be sure to remove them from your copy.
  */

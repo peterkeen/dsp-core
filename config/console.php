@@ -17,21 +17,70 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+use DreamFactory\Platform\Utility\Fabric;
 
 /**
- * web.php
- * This is the main configuration file for the DreamFactory Services Platform server application.
+ * console.php
+ * This is the main configuration file for the DreamFactory Services Platform server console.
  */
 
 /**
- * Load up the database and common configurations between the web and background apps,
+ * Load up the common configurations between the web and background apps,
  * setting globals whilst at it.
  */
-$_dbConfig = require( __DIR__ . '/database.config.php' );
 $_commonConfig = require( __DIR__ . '/common.config.php' );
 
+/**
+ * Load up the database configuration, free edition, private hosted, or others.
+ * Look for non-default database config to override.
+ */
+$_dbConfig = array();
+if ( file_exists( __DIR__ . '/database.config.php' ) )
+{
+    /** @noinspection PhpIncludeInspection */
+    $_dbConfig = @require( __DIR__ . '/database.config.php' );
+}
+else
+{
+    if ( Fabric::fabricHosted() )
+    {
+        $_dbConfig = Fabric::initialize();
+    }
+    else
+    {
+        /**
+         * Database names vary by type of DSP:
+         *
+         *        1. Free Edition/Hosted:   DSP name
+         *        2. Hosted Private:        hpp_<DSP Name>
+         *        3. All others:            dreamfactory or whatever is in non-default config.
+         */
+
+        if ( false !== ( $_host = Fabric::hostedPrivatePlatform( true ) ) )
+        {
+            $_dbName = 'hpp_' . str_ireplace( array( '.dreamfactory.com', '-', '.cloud', '.' ), array( null, '_', null, '_' ), $_host );
+        }
+        else
+        {
+            $_dbName = 'dreamfactory';
+        }
+
+        // default config for local database
+        $_dbConfig = array(
+            'connectionString'      => 'mysql:host=localhost;port=3306;dbname=' . $_dbName,
+            'username'              => 'dsp_user',
+            'password'              => 'dsp_user',
+            'emulatePrepare'        => true,
+            'charset'               => 'utf8',
+            'enableProfiling'       => defined( 'YII_DEBUG' ),
+            'enableParamLogging'    => defined( 'YII_DEBUG' ),
+            'schemaCachingDuration' => 3600,
+        );
+    }
+}
+
 //.........................................................................
-//. The configuration himself (like Raab)
+//. The configuration
 //.........................................................................
 
 return array(

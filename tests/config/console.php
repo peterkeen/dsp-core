@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 /**
- * console.config.php
+ * console.php
  * This is the main configuration file all CLI applications
  */
 if ( 'cli' == PHP_SAPI )

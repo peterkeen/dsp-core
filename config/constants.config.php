@@ -28,7 +28,7 @@ if ( defined( 'DSP_VERSION' ) )
 //*************************************************************************
 
 /**
- * @var string
+ * @var string 
  */
 const DSP_VERSION = '1.5.6';
 /**

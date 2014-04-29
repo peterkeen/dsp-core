@@ -14,162 +14,162 @@
 body,
 body.body-transparent,
 body.bg-transparent {
-    background: rgba(68, 68, 68, .5);
-    transition: background-color 0.2s;
+	background: rgba(68, 68, 68, .5);
+	transition: background-color 0.2s;
 }
 
 body.body-white {
-    background-color: #ffffff;
+	background-color: #ffffff;
 }
 
 body.body-white > a {
-    color: #666;
+	color: #666;
 }
 
 body.body-white > a:hover, body.body-white > a:focus, body.body-white > a:active {
-    color: #000;
+	color: #000;
 }
 
 body.body-light {
-    background-color: #ccc;
+	background-color: #ccc;
 }
 
 body.body-white > a {
-    color: #999;
+	color: #999;
 }
 
 body.body-light > a:hover, body.body-light > a:focus, body.body-light > a:active {
-    color: #333;
+	color: #333;
 }
 
 body.body-dark {
-    background-color: #444;
+	background-color: #444;
 }
 
 body.body-dark > a {
-    color: #ccc;
+	color: #ccc;
 }
 
 body.body-dark > a:hover, body.body-dark > a:focus, body.body-dark > a:active {
-    color: #fff;
+	color: #fff;
 }
 
 body[class^="body-starburst-"] {
-    background-size:     cover;
-    background-position: center;
-    background-origin:   border-box;
+	background-size:     cover;
+	background-position: center;
+	background-origin:   border-box;
 }
 
 body.bg-starburst, body.body-starburst-default {
-    background:      url(/img/bg-starburst-default.svg) top left;
-    background-size: cover;
+	background:      url(/img/bg-starburst-default.svg) top left;
+	background-size: cover;
 }
 
 body.body-starburst-orange {
-    background-image: url(/img/bg-starburst-orange.svg);
+	background-image: url(/img/bg-starburst-orange.svg);
 }
 
 body.body-starburst-purple {
-    background-image: url(/img/bg-starburst-purple.svg);
+	background-image: url(/img/bg-starburst-purple.svg);
 }
 
 body.body-starburst-blue {
-    background-image: url(/img/bg-starburst-blue.svg);
+	background-image: url(/img/bg-starburst-blue.svg);
 }
 
 body.body-starburst-red {
-    background-image: url(/img/bg-starburst-red.svg);
+	background-image: url(/img/bg-starburst-red.svg);
 }
 
 body.body-starburst-yellow {
-    background-image: url(/img/bg-starburst-yellow.svg);
+	background-image: url(/img/bg-starburst-yellow.svg);
 }
 
 body.body-starburst-error {
-    background:      url(/img/bg-starburst-error.svg) top;
-    background-size: cover;
+	background:      url(/img/bg-starburst-error.svg) top;
+	background-size: cover;
 }
 
 body.body-starburst-error #page-content {
-    padding-top: 84px;
+	padding-top: 84px;
 }
 
 body[class^="body-starburst-"] #page-content > a {
-    color:      #ccc;
-    transition: color 2s;
+	color:      #ccc;
+	transition: color 2s;
 }
 
 body[class^="body-starburst-"] #page-content > div > div > p > a {
-    color:      #ccc;
-    transition: color 2s;
+	color:      #ccc;
+	transition: color 2s;
 }
 
 body[class^="body-starburst-"] #page-content > div > div > p > a:hover,
 body[class^="body-starburst-"] #page-content > div > div > p > a:active,
 body[class^="body-starburst-"] #page-content > div > div > p > a:focus {
-    color:      #eee;
-    transition: color 2s;
+	color:      #eee;
+	transition: color 2s;
 }
 
 #page-content {
-    width:      100%;
-    min-height: 100%;
-    height:     inherit;
-    /* Negative indent footer by its height */
-    margin:     0;
-    /* Pad bottom by footer height */
-    padding:    0;
-    overflow:   auto;
+	width:      100%;
+	min-height: 100%;
+	height:     inherit;
+	/* Negative indent footer by its height */
+	margin:     0;
+	/* Pad bottom by footer height */
+	padding:    0;
+	overflow:   auto;
 }
 
 #page-content > div {
-    padding-top:   0;
-    padding-left:  0;
-    padding-right: 0;
+	padding-top:   0;
+	padding-left:  0;
+	padding-right: 0;
 }
 
 .box-wrapper {
-    margin:         0 auto;
-    min-width:      400px;
-    max-width:      440px;
-    padding-bottom: 44px;
+	margin:         0 auto;
+	min-width:      400px;
+	max-width:      440px;
+	padding-bottom: 44px;
 }
 
 #footer {
-    position:         fixed;
-    bottom:           0;
-    right:            0;
-    left:             0;
-    /* Set the fixed height of the footer here */
-    height:           44px;
-    background-color: #000;
-    /*transition:       background-color 1500ms, color 1500ms;*/
-    color:            rgba(242, 242, 242, .8);
-    z-index:          10000;
+	position:         fixed;
+	bottom:           0;
+	right:            0;
+	left:             0;
+	/* Set the fixed height of the footer here */
+	height:           44px;
+	background-color: #000;
+	/*transition:       background-color 1500ms, color 1500ms;*/
+	color:            rgba(242, 242, 242, .8);
+	z-index:          10000;
 }
 
 #footer:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-    transition:       background-color 1500ms, color 1500ms;
-    color:            rgba(255, 255, 255, 1);
+	background-color: rgba(0, 0, 0, 0.8);
+	transition:       background-color 1500ms, color 1500ms;
+	color:            rgba(255, 255, 255, 1);
 }
 
 #footer > .container {
-    padding-left:  15px;
-    padding-right: 15px;
-    padding-top:   4px;
+	padding-left:  15px;
+	padding-right: 15px;
+	padding-top:   4px;
 }
 
 #footer ul, ol {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 #footer .social-links {
-    /*margin-top: 4px;*/
+	/*margin-top: 4px;*/
 }
 
 #footer > .container p {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 /**************************************************************************
@@ -177,41 +177,39 @@ body[class^="body-starburst-"] #page-content > div > div > p > a:focus {
 **************************************************************************/
 
 .navbar {
-    padding-bottom: 0;
-    margin-bottom:  0;
-    height:         44px;
-    border-bottom:  1px solid #777;
-    /*border-bottom:  1px solid #777;*/
-    /*border-image:   none;*/
-    /*border-radius:  0 !important;*/
-    left:           0;
-    padding-left:   20px;
-    padding-right:  20px;
-    position:       fixed;
-    right:          0;
+	padding-bottom: 0;
+	margin-bottom:  0;
+	height:         44px;
+	border-bottom:  1px solid rgba(255, 255, 255, 0.25);
+	left:           0;
+	padding-left:   20px;
+	padding-right:  20px;
+	position:       fixed;
+	right:          0;
+	box-shadow:     0px 0px 4px rgba(64, 64, 64, .25);;
 }
 
 .navbar-toggle {
-    padding:          6px 7px;
-    background-color: rgba(0, 0, 0, 0.4);
+	padding:          6px 7px;
+	background-color: rgba(0, 0, 0, 0.4);
 }
 
 .navbar-inverse {
-    background-color: #000;
-    /*transition:       background-color 1000ms, color 1000ms, border-bottom-color 1000ms;*/
+	background-color: #000;
+	/*transition:       background-color 1000ms, color 1000ms, border-bottom-color 1000ms;*/
 }
 
 .navbar-inverse:hover {
-    /*background-color: rgba(0, 0, 0, 0.8);*/
-    /*color:            rgba(255, 255, 255, 1);*/
-    /*border-bottom:    1px solid rgba(0, 0, 0, 0.6);*/
-    /*transition:       background-color 1000ms, color 1000ms, border-bottom-color 1000ms;*/
+	/*background-color: rgba(0, 0, 0, 0.8);*/
+	/*color:            rgba(255, 255, 255, 1);*/
+	/*border-bottom:    1px solid rgba(0, 0, 0, 0.6);*/
+	/*transition:       background-color 1000ms, color 1000ms, border-bottom-color 1000ms;*/
 }
 
 .container-fluid > .navbar-header {
-    width:        100%;
-    margin-left:  0;
-    margin-right: 0;
+	width:        100%;
+	margin-left:  0;
+	margin-right: 0;
 }
 
 /**************************************************************************
@@ -219,53 +217,53 @@ body[class^="body-starburst-"] #page-content > div > div > p > a:focus {
 **************************************************************************/
 
 .dream-orange {
-    color:      rgba(255, 140, 0, 0.5);
-    transition: color 1.5s;
+	color:      rgba(255, 140, 0, 0.5);
+	transition: color 1.5s;
 }
 
 .df-brand {
-    position:       relative;
-    padding:        0;
-    font-family:    'Roboto', 'Open Sans', sans-serif;
-    text-transform: lowercase;
-    color:          rgba(255, 255, 255, .25);
-    font-size:      32px;
-    margin:         auto 0;
-    line-height:    44px;
-    letter-spacing: -1px;
-    font-weight:    bold;
-    transition:     color 1.5s;
-    vertical-align: middle;
+	position:       relative;
+	padding:        0;
+	font-family:    'Roboto', 'Open Sans', sans-serif;
+	text-transform: lowercase;
+	color:          rgba(255, 255, 255, .25);
+	font-size:      32px;
+	margin:         auto 0;
+	line-height:    44px;
+	letter-spacing: -1px;
+	font-weight:    bold;
+	transition:     color 1.5s;
+	vertical-align: middle;
 }
 
 .navbar-inverse:hover .df-brand {
-    color:      rgba(255, 255, 255, .5);
-    transition: color 1.5s;
+	color:      rgba(255, 255, 255, .5);
+	transition: color 1.5s;
 }
 
 .navbar-inverse:hover .dream-orange {
-    color:      rgba(255, 140, 0, 0.8);
-    transition: color 1.5s;
+	color:      rgba(255, 140, 0, 0.8);
+	transition: color 1.5s;
 }
 
 #angular-content > div > div > div.brand {
-    position:       relative;
-    padding:        0;
-    line-height:    40px;
-    margin-left:    0;
-    font-weight:    bold;
-    font-family:    'Lato', 'Arial', sans-serif;
-    text-transform: lowercase;
-    color:          rgba(0, 0, 0, .5);
-    font-size:      24pt;
+	position:       relative;
+	padding:        0;
+	line-height:    40px;
+	margin-left:    0;
+	font-weight:    bold;
+	font-family:    'Lato', 'Arial', sans-serif;
+	text-transform: lowercase;
+	color:          rgba(0, 0, 0, .5);
+	font-size:      24pt;
 }
 
 .page-logo {
-    text-align: center;
+	text-align: center;
 }
 
 .page-logo img {
-    width: 64px;
+	width: 64px;
 }
 
 /*.df-logo {*/
@@ -293,12 +291,12 @@ body[class^="body-starburst-"] #page-content > div > div > p > a:focus {
 /*}*/
 
 .df-logo {
-    margin-right: 20px;
-    margin-top:   4px;
+	margin-right: 20px;
+	margin-top:   4px;
 }
 
 .df-logo img {
-    height: 38px;
+	height: 38px;
 }
 
 /**************************************************************************
@@ -306,20 +304,20 @@ body[class^="body-starburst-"] #page-content > div > div > p > a:focus {
 **************************************************************************/
 
 body[class^="body-starburst-"] .form-light h2:first-child {
-    width:         auto;
-    margin-top:    10px;
-    border-bottom: 1px inset #f0f0f0;
+	width:         auto;
+	margin-top:    10px;
+	border-bottom: 1px inset #f0f0f0;
 }
 
 #formbox.form-light form p.lead {
-    color:       #fff;
-    font-size:   16px;
-    font-weight: bold;
-    text-align:  center;
+	color:       #fff;
+	font-size:   16px;
+	font-weight: bold;
+	text-align:  center;
 }
 
 body[class^="body-starburst-"] #formbox.form-light form p.lead {
-    color: #333;
+	color: #333;
 }
 
 /** Box and shadows **/
@@ -387,41 +385,41 @@ body[class^="body-starburst-"] #formbox.form-light form p.lead {
 /*}*/
 
 .inset {
-    /* Shadows are visible under slightly transparent text color */
-    /*color:       rgba(224, 134, 37, 0.5);*/
-    /*text-shadow: 0 1px 1px #ccc, 0 0 0 #000, 0 1px 1px #ccc;*/
-    color: #ddd;
+	/* Shadows are visible under slightly transparent text color */
+	/*color:       rgba(224, 134, 37, 0.5);*/
+	/*text-shadow: 0 1px 1px #ccc, 0 0 0 #000, 0 1px 1px #ccc;*/
+	color: #ddd;
 }
 
 .dsp-version {
 }
 
 .form-buttons small {
-    line-height: 34px;
-    opacity:     .5;
+	line-height: 34px;
+	opacity:     .5;
 }
 
 .footer-text {
-    margin: 12px 0;
+	margin: 12px 0;
 }
 
 .footer-text > a {
-    color:      rgba(242, 242, 242, 0.8);
-    transition: opacity 1500ms;
+	color:      rgba(242, 242, 242, 0.8);
+	transition: opacity 1500ms;
 }
 
 .footer-text > a:hover {
-    color:      rgba(242, 242, 242, 1);
-    transition: opacity 1500ms;
+	color:      rgba(242, 242, 242, 1);
+	transition: opacity 1500ms;
 }
 
 .align-center {
-    text-align: center;
-    margin:     auto;
+	text-align: center;
+	margin:     auto;
 }
 
 .container .credit {
-    margin: 20px 0;
+	margin: 20px 0;
 }
 
 /**************************************************************************
@@ -429,149 +427,149 @@ body[class^="body-starburst-"] #formbox.form-light form p.lead {
 **************************************************************************/
 
 #logo, #formbox, .page-logo img {
-    margin-left:  auto;
-    margin-right: auto;
-    position:     relative;
+	margin-left:  auto;
+	margin-right: auto;
+	position:     relative;
 }
 
 #logo img {
-    margin:  0 auto;
-    display: block;
+	margin:  0 auto;
+	display: block;
 }
 
 #formbox {
-    width:         100%;
-    margin-bottom: 35px;
-    position:      relative;
-    margin:        15% auto 0;
+	width:         100%;
+	margin-bottom: 35px;
+	position:      relative;
+	margin:        15% auto 0;
 }
 
 #formbox.tall-box {
-    margin-top:    5%;
-    margin-bottom: 15%;
+	margin-top:    5%;
+	margin-bottom: 15%;
 }
 
 #formbox h2 {
-    text-align:    center;
-    margin-bottom: 20px;
+	text-align:    center;
+	margin-bottom: 20px;
 }
 
 #formbox.container p:first-of-type {
-    text-align: center;
+	text-align: center;
 }
 
 #formbox h4 {
-    text-align: center;
+	text-align: center;
 }
 
 #formbox form {
-    /*background: #2E363F;*/
-    position:    relative;
-    margin:      0 auto;
-    font-family: normal, sans-serif;
-    color:       #fff;
+	/*background: #2E363F;*/
+	position:    relative;
+	margin:      0 auto;
+	font-family: normal, sans-serif;
+	color:       #fff;
 }
 
 #form-login {
-    z-index: 200;
-    display: block;
+	z-index: 200;
+	display: block;
 }
 
 #form-recover {
-    z-index: 100;
-    display: none;
+	z-index: 100;
+	display: none;
 }
 
 #form-recover .form-actions {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 
 #form-register {
-    z-index: 100;
-    display: block;
+	z-index: 100;
+	display: block;
 }
 
 #form-register .form-actions {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 
 #formbox .form-group {
-    text-align: center;
-    margin:     0 auto 14px;
+	text-align: center;
+	margin:     0 auto 14px;
 }
 
 #formbox .controls {
-    padding: 0 20px;
+	padding: 0 20px;
 }
 
 #formbox .control-group {
-    padding:       20px 0;
-    margin-bottom: 0;
+	padding:       20px 0;
+	margin-bottom: 0;
 }
 
 .form-buttons {
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
+	border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 form, .form-buttons {
-    background:    none;
-    padding-top:   15px;
-    margin: 0 0 100px;
+	background:  none;
+	padding-top: 15px;
+	margin:      0 0 100px;
 }
 
 .form-buttons button {
-    font-family: 'Open Sans', 'Helvetica Neue Light', 'Arial', sans-serif;
-    font-weight: 300;
+	font-family: 'Open Sans', 'Helvetica Neue Light', 'Arial', sans-serif;
+	font-weight: 300;
 }
 
 #formbox .normal_text {
-    padding:     15px 10px;
-    text-align:  center;
-    font-size:   14px;
-    line-height: 20px;
-    /*background:  #2E363F;*/
-    color:       #fff;
+	padding:     15px 10px;
+	text-align:  center;
+	font-size:   14px;
+	line-height: 20px;
+	/*background:  #2E363F;*/
+	color:       #fff;
 }
 
 /** style for "remember me" label on login view */
 #login-form > div:nth-child(6) > label {
-    margin-bottom:  0;
-    padding-bottom: 0;
-    margin-left:    4px;
+	margin-bottom:  0;
+	padding-bottom: 0;
+	margin-left:    4px;
 }
 
 /** Form error message **/
 .form-group div.error {
-    color:          #eeeeee;
-    text-align:     left;
-    font-size:      15px;
-    letter-spacing: normal;
+	color:          #eeeeee;
+	text-align:     left;
+	font-size:      15px;
+	letter-spacing: normal;
 }
 
 .logo-container h3 {
-    margin-top:    0;
-    margin-bottom: 0;
-    padding-top:   0;
+	margin-top:    0;
+	margin-bottom: 0;
+	padding-top:   0;
 }
 
 /** Alerts **/
 .alert-area .alert {
-    padding: 8px 14px;
+	padding: 8px 14px;
 }
 
 .alert {
-    margin:     10px auto auto;
-    box-shadow: inset 0 0 0;
+	margin:     10px auto auto;
+	box-shadow: inset 0 0 0;
 }
 
 #formbox .lead {
-    font-size:   36px;
-    font-weight: bold;
-    color:       #ffffff;
+	font-size:   36px;
+	font-weight: bold;
+	color:       #ffffff;
 }
 
 .strong-disabled {
-    color: #333;
+	color: #333;
 }
 
 /**************************************************************************
@@ -579,57 +577,57 @@ form, .form-buttons {
 **************************************************************************/
 
 @media (max-width: 768px) {
-    .logo-container img {
-        width: 192px;
-    }
+	.logo-container img {
+		width: 192px;
+	}
 
-    #logo {
-        width: 60%;
-    }
+	#logo {
+		width: 60%;
+	}
 
-    .df-logo {
-        margin-left: 10px;
-    }
+	.df-logo {
+		margin-left: 10px;
+	}
 
 }
 
 @media (max-width: 480px) {
-    #logo {
-        width: 40%;
-    }
+	#logo {
+		width: 40%;
+	}
 
-    .df-logo {
-        margin-left:  0;
-        padding-left: 0;
-    }
+	.df-logo {
+		margin-left:  0;
+		padding-left: 0;
+	}
 
-    .navbar-toggle {
-        margin-right: 0;
-    }
+	.navbar-toggle {
+		margin-right: 0;
+	}
 
-    #formbox {
-        width: 435px;
-    }
+	#formbox {
+		width: 435px;
+	}
 
-    #formbox .control-group {
-        padding:       8px 0;
-        margin-bottom: 0;
-    }
+	#formbox .control-group {
+		padding:       8px 0;
+		margin-bottom: 0;
+	}
 
-    #footer > div > span.pull-left {
-        width: 100%;
-        float: none;
-    }
+	#footer > div > span.pull-left {
+		width: 100%;
+		float: none;
+	}
 
-    .footer-text {
-        text-align: center;
-        width:      100%;
-        display:    inline-block;
-    }
+	.footer-text {
+		text-align: center;
+		width:      100%;
+		display:    inline-block;
+	}
 
-    .dsp-footer-version {
-        display: none;
-    }
+	.dsp-footer-version {
+		display: none;
+	}
 }
 
 /**************************************************************************
@@ -640,141 +638,141 @@ form, .form-buttons {
  * Error pages
  */
 .container-error {
-    color:      #fff;
-    margin-top: 42px;
+	color:      #fff;
+	margin-top: 42px;
 }
 
 .container-error a {
-    color: #ccc;
+	color: #ccc;
 }
 
 .container-error a:hover {
-    color: #fff;
+	color: #fff;
 }
 
 .body-starburst .container-error {
-    color: #333;
+	color: #333;
 }
 
 .container-error h1, .container-error h3 {
-    font-family: "Droid Sans", "Open Sans", "Lato", Arial, sans-serif;
-    font-weight: normal;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.30);
+	font-family: "Droid Sans", "Open Sans", "Lato", Arial, sans-serif;
+	font-weight: normal;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.30);
 }
 
 /** Starburst colors are all the same **/
 body[class^="body-starburst-"] > div.container-fluid.container-inner > div > p > a {
-    color:      #FFC89D;
-    transition: color 350ms ease;
+	color:      #FFC89D;
+	transition: color 350ms ease;
 }
 
 body[class^="body-starburst-"] > div.container-fluid.container-inner > div > p > a:hover,
 body[class^="body-starburst-"] > div.container-fluid.container-inner > div > p > a:focus,
 body[class^="body-starburst-"] > div.container-fluid.container-inner > div > p > a:active {
-    color:      #ffffff;
-    transition: color 350ms ease;
+	color:      #ffffff;
+	transition: color 350ms ease;
 }
 
 body > div.container-fluid.container-inner {
-    padding-top:    24px;
-    padding-bottom: 25px;
+	padding-top:    24px;
+	padding-bottom: 25px;
 }
 
 .container-error {
-    margin-right:  auto;
-    margin-left:   auto;
-    padding-left:  5px;
-    padding-right: 5px;
+	margin-right:  auto;
+	margin-left:   auto;
+	padding-left:  5px;
+	padding-right: 5px;
 }
 
 .container-error h1:first-child {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 .container-error h3 {
-    margin-top: 45px;
+	margin-top: 45px;
 }
 
 .container-error .error {
-    font-size:   1.2em;
-    font-weight: normal;
+	font-size:   1.2em;
+	font-weight: normal;
 }
 
 #container.row {
-    margin:  0;
-    padding: 0;
+	margin:  0;
+	padding: 0;
 }
 
 /** Main menu **/
 .container-fluid .row .col-md-2 {
-    margin:  0;
-    padding: 0 4px;
+	margin:  0;
+	padding: 0 4px;
 }
 
 /** Inner content **/
 .container-fluid .row .col-md-10 {
-    margin:  0;
-    padding: 0 4px 8px;
+	margin:  0;
+	padding: 0 4px 8px;
 }
 
 /** Panel defaults **/
 .panel-body {
-    color: #777;
+	color: #777;
 }
 
 .panel-default > .panel-heading {
-    color:          rgba(224, 134, 37, 1);
-    /*font-stretch: semi-condensed;*/
-    font-weight:    bold;
-    font-size:      2.4em;
-    padding-top:    4px;
-    padding-bottom: 4px;
+	color:          rgba(224, 134, 37, 1);
+	/*font-stretch: semi-condensed;*/
+	font-weight:    bold;
+	font-size:      2.4em;
+	padding-top:    4px;
+	padding-bottom: 4px;
 }
 
 #loading {
-    position: absolute;
-    top:      8px;
-    right:    8px;
-    color:    rgba(68, 68, 68, .5);
+	position: absolute;
+	top:      8px;
+	right:    8px;
+	color:    rgba(68, 68, 68, .5);
 }
 
 #sidebar > div > ul.app-navbar {
-    background-color: rgba(68, 68, 68, .4);
+	background-color: rgba(68, 68, 68, .4);
 }
 
 #sidebar {
-    margin-top:       4px;
-    padding:          4px 6px;
-    height:           100%;
-    display:          block;
-    border-radius:    0;
-    width:            auto;
-    background-color: rgba(68, 68, 68, 0.8);
+	margin-top:       4px;
+	padding:          4px 6px;
+	height:           100%;
+	display:          block;
+	border-radius:    0;
+	width:            auto;
+	background-color: rgba(68, 68, 68, 0.8);
 }
 
 /** media queries */
 @media screen and (max-width: 940px) {
-    #navbar-container {
-        padding: 0;
-        margin:  0;
-    }
+	#navbar-container {
+		padding: 0;
+		margin:  0;
+	}
 
-    .navbar-spacer {
-        padding-left:  10px;
-        padding-right: 10px;
-    }
+	.navbar-spacer {
+		padding-left:  10px;
+		padding-right: 10px;
+	}
 }
 
 /** media queries */
 @media screen and (max-width: 940px) {
-    .container-error {
-        padding-left:  15px;
-        padding-right: 15px;
-    }
+	.container-error {
+		padding-left:  15px;
+		padding-right: 15px;
+	}
 
-    #formbox {
-        margin: 25% auto;
-    }
+	#formbox {
+		margin: 25% auto;
+	}
 }
 
 /**************************************************************************
@@ -782,48 +780,48 @@ body > div.container-fluid.container-inner {
 **************************************************************************/
 
 .callout {
-    margin:      20px 0;
-    padding:     20px;
-    border-left: 3px solid #eee
+	margin:      20px 0;
+	padding:     20px;
+	border-left: 3px solid #eee
 }
 
 .callout h4 {
-    margin-top:    0;
-    margin-bottom: 5px
+	margin-top:    0;
+	margin-bottom: 5px
 }
 
 .callout p:last-child {
-    margin-bottom: 0
+	margin-bottom: 0
 }
 
 .callout code {
-    background-color: #fff;
-    border-radius:    3px
+	background-color: #fff;
+	border-radius:    3px
 }
 
 .callout-danger {
-    background-color: #fdf7f7;
-    border-color:     #d9534f
+	background-color: #fdf7f7;
+	border-color:     #d9534f
 }
 
 .callout-danger h4 {
-    color: #d9534f
+	color: #d9534f
 }
 
 .callout-warning {
-    background-color: #fcf8f2;
-    border-color:     #f0ad4e
+	background-color: #fcf8f2;
+	border-color:     #f0ad4e
 }
 
 .callout-warning h4 {
-    color: #f0ad4e
+	color: #f0ad4e
 }
 
 .callout-info {
-    background-color: #f4f8fa;
-    border-color:     #5bc0de
+	background-color: #f4f8fa;
+	border-color:     #5bc0de
 }
 
 .callout-info h4 {
-    color: #5bc0de
+	color: #5bc0de
 }

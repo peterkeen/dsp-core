@@ -353,12 +353,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/lib-php-common-platform.git",
-                "reference": "5d39d19ae76c66d0ca1a0d5e905ab5ba5bb726bd"
+                "reference": "4144ecee2a0d9634bde466e247a47941d139281d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/lib-php-common-platform/zipball/5d39d19ae76c66d0ca1a0d5e905ab5ba5bb726bd",
-                "reference": "5d39d19ae76c66d0ca1a0d5e905ab5ba5bb726bd",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/lib-php-common-platform/zipball/4144ecee2a0d9634bde466e247a47941d139281d",
+                "reference": "4144ecee2a0d9634bde466e247a47941d139281d",
                 "shasum": ""
             },
             "require": {
@@ -406,12 +406,12 @@
                 {
                     "name": "Jerry Ablan",
                     "email": "jerryablan@dreamfactory.com",
-                    "role": "Lead Developer, server-side"
+                    "role": "Lead Developer, server-side/client-side"
                 },
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com",
-                    "role": "Lead Developer, server-side"
+                    "role": "Lead Developer, server-side/client-side"
                 }
             ],
             "description": "DreamFactory Services Platform(tm) Components Library/SDK for PHP",
@@ -421,7 +421,7 @@
                 "dsp-core",
                 "sdk"
             ],
-            "time": "2014-04-28 13:33:08"
+            "time": "2014-04-28 23:51:59"
         },
         {
             "name": "dreamfactory/lib-php-common-yii",
@@ -718,16 +718,16 @@
         },
         {
             "name": "kisma/kisma",
-            "version": "0.2.37",
+            "version": "0.2.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucifurious/kisma.git",
-                "reference": "d3bdca2aacd5ee6a99a26d384104a9259c417a75"
+                "reference": "4a2c3d8191120584799474e847796600e789fcf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucifurious/kisma/zipball/d3bdca2aacd5ee6a99a26d384104a9259c417a75",
-                "reference": "d3bdca2aacd5ee6a99a26d384104a9259c417a75",
+                "url": "https://api.github.com/repos/lucifurious/kisma/zipball/4a2c3d8191120584799474e847796600e789fcf3",
+                "reference": "4a2c3d8191120584799474e847796600e789fcf3",
                 "shasum": ""
             },
             "require": {
@@ -772,7 +772,7 @@
                 "php5",
                 "utility"
             ],
-            "time": "2014-04-18 19:50:40"
+            "time": "2014-04-28 23:39:30"
         },
         {
             "name": "monolog/monolog",
